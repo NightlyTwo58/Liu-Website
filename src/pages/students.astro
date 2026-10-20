@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import InfoPage from '../components/InfoPage.astro';
+const items = [{ label: 'Graduate study', title: 'PhD and master’s applicants', detail: '［Explain programs, application cycle, prerequisites, and how to identify the professor in an application. Link to the department admissions page.］', link: '#' }, { label: 'Undergraduate research', title: 'Research assistant opportunities', detail: '［Describe expected preparation, time commitment, and how students can express interest.］', link: 'mailto:name@university.edu' }, { label: 'What to include', title: 'A useful first email', detail: 'Please include a brief introduction, your interests, relevant experience, and a CV or résumé. I will reply when a suitable opportunity is available.', link: 'mailto:name@university.edu' }];
+---
+<Base title="Prospective students | ［Professor Name］" description="I welcome inquiries from prospective graduate students interested in ［research area］. Tell me what questions you want to work on and how your experience connects to the group.">
+	<main><InfoPage title="Prospective students" eyebrow="Work with us" intro="I welcome inquiries from prospective graduate students interested in ［research area］. Tell me what questions you want to work on and how your experience connects to the group." items={items} /></main>
+</Base>

@@ -4,7 +4,7 @@ import { youTubeEmbedTemplate } from "../../src/components/mdx/YouTubeEmbed.temp
 export const BlogCollection: Collection = {
 
   name: "blog",
-  label: "Blogs",
+  label: "News & Updates",
   path: "src/content/blog",
   format: "mdx",
   ui: {

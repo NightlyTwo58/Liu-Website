@@ -1,0 +1,8 @@
+---
+interface Props { title: string; eyebrow: string; intro: string; items: { label: string; title: string; detail: string; link?: string }[] }
+const { title, eyebrow, intro, items } = Astro.props;
+---
+<section class="page-shell info-page">
+	<p class="eyebrow">{eyebrow}</p><h1>{title}</h1><p class="lead page-lead">{intro}</p>
+	<div class="info-list">{items.map((item, index) => <article class="info-row"><span class="row-number">{String(index + 1).padStart(2, '0')}</span><div><p class="row-label">{item.label}</p><h2>{item.title}</h2><p>{item.detail}</p></div>{item.link && <a href={item.link}>Details →</a>}</article>)}</div>
+</section>

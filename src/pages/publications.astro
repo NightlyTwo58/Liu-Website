@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import InfoPage from '../components/InfoPage.astro';
+const items = [{ label: '2025 · Journal article', title: '［Title of recent paper］', detail: '［Author One］, ［Author Two］, and ［Professor Name］. ［Journal Name］. DOI: ［10.xxxx/xxxxx］', link: '#' }, { label: '2024 · Conference paper', title: '［Title of paper］', detail: '［Author One］ and ［Professor Name］. In ［Conference / Proceedings］.', link: '#' }, { label: '2023 · Journal article', title: '［Title of paper］', detail: '［Author One］, ［Professor Name］, and ［Author Three］. ［Journal Name］.', link: '#' }];
+---
+<Base title="Publications | ［Professor Name］" description="A selected list of publications by ［Professor Name］ and collaborators. Add DOI, PDF, preprint, and project links as they become available.">
+	<main><InfoPage title="Publications" eyebrow="Selected papers and scholarly work" intro="A selected list of publications by ［Professor Name］ and collaborators. Add DOI, PDF, preprint, and project links as they become available." items={items} /></main>
+</Base>

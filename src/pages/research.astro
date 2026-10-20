@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import InfoPage from '../components/InfoPage.astro';
+const items = [{ label: 'Theme 01', title: '［Research theme one］', detail: '［A concise description of the question, approach, and why it matters. Add links to projects or related publications.］', link: '/publications' }, { label: 'Theme 02', title: '［Research theme two］', detail: '［Describe a second line of work, including the methods or systems used by the group.］', link: '/publications' }, { label: 'Theme 03', title: '［Research theme three］', detail: '［Describe a developing project, collaboration, or broader direction.］', link: '/people' }];
+---
+<Base title="Research | ［Professor Name］" description="The group studies ［central problem］ across three connected themes. Replace these summaries with current projects, methods, and links to papers or collaborators.">
+	<main><InfoPage title="Research" eyebrow="Research program" intro="The group studies ［central problem］ across three connected themes. Replace these summaries with current projects, methods, and links to papers or collaborators." items={items} /></main>
+</Base>

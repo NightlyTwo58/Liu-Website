@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import InfoPage from '../components/InfoPage.astro';
+const items = [{ label: 'Principal investigator', title: 'Professor ［Full Name］', detail: '［Short biography, research interests, and selected background.］', link: 'mailto:name@university.edu' }, { label: 'Graduate researcher', title: '［Student Name］', detail: '［Research topic］ · ［Program / year］ · ［Personal page or email］', link: '#' }, { label: 'Research staff', title: '［Colleague Name］', detail: '［Role and area of work］ · ［Contact or profile link］', link: '#' }];
+---
+<Base title="People | ［Professor Name］" description="Meet the researchers, students, and collaborators in ［Lab / Group Name］. Update each entry with a short bio and relevant links.">
+	<main><InfoPage title="People" eyebrow="Our group" intro="Meet the researchers, students, and collaborators in ［Lab / Group Name］. Update each entry with a short bio and relevant links." items={items} /></main>
+</Base>

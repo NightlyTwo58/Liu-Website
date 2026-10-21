@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import PersonBody from '../../components/islands/PersonBody.astro';
+import { getPerson, listPeople } from '../../lib/data';
+import { islands } from '../../lib/islands';
+export async function getStaticPaths() { return (await listPeople()).map((person) => ({ params: { slug: person._sys.filename } })); }
+const slug = Astro.params.slug ?? '';
+const result = await getPerson(slug);
+const data = result.data?.person;
+if (!data) return new Response('Not Found', { status: 404 });
+---
+<Base title={`${data.name} | ［Professor Name］`} description={data.researchArea ?? 'Group member profile.'}>
+	<TinaIsland name="person" wrapper={islands.person.wrapper} params={{ slug }} primary><PersonBody data={data} /></TinaIsland>
+</Base>

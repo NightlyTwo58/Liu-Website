@@ -1,0 +1,15 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import type { CmsPublication } from '../../lib/data';
+interface Props { data?: CmsPublication | null }
+const { data } = Astro.props;
+---
+{data && <main class="page-shell info-page">
+	<p class="eyebrow"><span data-tina-field={tinaField(data, 'year')}>{data.year}</span>{data.journal && <> · <span data-tina-field={tinaField(data, 'journal')}>{data.journal}</span></>}</p>
+	<h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+	<p class="lead page-lead" data-tina-field={tinaField(data, 'authors')}>{data.authors}</p>
+	<div class="cms-prose" data-tina-field={tinaField(data, 'abstract')}><TinaMarkdown content={data.abstract} /></div>
+	<div class="contact-line">{data.doi && <a href={`https://doi.org/${data.doi}`} data-tina-field={tinaField(data, 'doi')}>DOI ↗</a>}{data.paperUrl && <a href={data.paperUrl} data-tina-field={tinaField(data, 'paperUrl')}>Paper ↗</a>}{data.pdfUrl && <a href={data.pdfUrl} data-tina-field={tinaField(data, 'pdfUrl')}>PDF ↗</a>}</div>
+	<a href="/publications">← All publications</a>
+</main>}

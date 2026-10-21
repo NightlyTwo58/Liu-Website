@@ -1,11 +1,46 @@
 ---
 import Blocks from '../blocks/Blocks.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsPage } from '../../lib/data';
+import { listPeople, listPublications } from '../../lib/data';
 
-interface Props {
-	data?: CmsPage | null;
-}
-
+interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
+const publications = data?.profile ? (await listPublications()).slice(0, 2) : [];
+const people = data?._sys.filename === 'people' ? await listPeople() : [];
+const allPublications = data?._sys.filename === 'publications' ? await listPublications() : [];
+function isPresent<T>(value: T | null | undefined): value is T { return value !== null && value !== undefined; }
 ---
-{data && <Blocks data={data} />}
+{data?.profile ? (
+	<main class="page-shell home-page">
+		<section class="intro-grid" aria-labelledby="profile-title">
+			<div>
+				<p class="eyebrow" data-tina-field={tinaField(data.profile, 'department')}>{data.profile.department}</p>
+				<h1 id="profile-title" data-tina-field={tinaField(data.profile, 'name')}>{data.profile.name}</h1>
+				<p class="role-line" data-tina-field={tinaField(data.profile, 'role')}>{data.profile.role}</p>
+				<p class="lead" data-tina-field={tinaField(data.profile, 'bio')}>{data.profile.bio}</p>
+				<div class="contact-line"><a href={`mailto:${data.profile.email}`} data-tina-field={tinaField(data.profile, 'email')}>{data.profile.email}</a><span data-tina-field={tinaField(data.profile, 'office')}>{data.profile.office}</span><a href="/students">Join the group →</a></div>
+			</div>
+			<aside class="profile-facts" aria-label="Profile details">
+				{data.profile.portrait ? <img class="portrait-placeholder" src={data.profile.portrait} alt={`Portrait of ${data.profile.name}`} data-tina-field={tinaField(data.profile, 'portrait')} /> : <div class="portrait-placeholder" role="img" aria-label="Portrait placeholder"><span>Portrait</span></div>}
+				<dl><div><dt>Office</dt><dd data-tina-field={tinaField(data.profile, 'office')}>{data.profile.office}</dd></div><div><dt>Hours</dt><dd data-tina-field={tinaField(data.profile, 'hours')}>{data.profile.hours}</dd></div><div><dt>CV</dt><dd><a href="/cv">CV &amp; statement →</a></dd></div></dl>
+			</aside>
+		</section>
+		<section class="home-columns">
+   <div class="section-block"><div class="section-heading"><h2>Research</h2><a href="/research">Overview →</a></div><p data-tina-field={tinaField(data, 'researchSummary')}>{data.researchSummary}</p><ul class="topic-list">{(data.researchThemes ?? []).filter(isPresent).map((theme) => <li data-tina-field={tinaField(theme, 'title')}>{theme.title}</li>)}</ul></div>
+   <div class="section-block"><div class="section-heading"><h2>Recent updates</h2><a href="/publications">All publications →</a></div><ul class="updates-list">{(data.updates ?? []).filter(isPresent).map((update) => <li><time data-tina-field={tinaField(update, 'date')}>{update.date}</time><span data-tina-field={tinaField(update, 'text')}>{update.text}</span></li>)}</ul></div>
+		</section>
+		<section class="section-block selected-work"><div class="section-heading"><h2>Selected work</h2><a href="/publications">Browse publications →</a></div><ol class="publication-list">{publications.map((publication) => <li><span class="pub-year">{publication.year}</span><div><strong>{publication.title}</strong><p>{publication.authors}. <em>{publication.journal}</em>.</p></div><a href={publication.doi ? `https://doi.org/${publication.doi}` : publication.pdfUrl || publication.paperUrl || `/publications/${publication._sys.filename}`}>Details ↗</a></li>)}</ol></section>
+	</main>
+) : data?.pageType === 'cv' ? (
+	<main class="page-shell info-page cv-page">
+		<p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p>
+		<section class="cv-materials" aria-label="CV and statements"><article class="cv-document"><div><p class="row-label">Curriculum vitae</p><h2>［Full Name］ — CV</h2><p data-tina-field={tinaField(data, 'cvUpdated')}>{data.cvUpdated} · PDF</p></div><a class="document-link" href={data.cvPdf || '/cv.pdf'} target="_blank" rel="noopener">Open or download CV ↗</a></article><p class="cv-note">The CV link points to <code>public/cv.pdf</code>. Replace that file with the current document.</p><article class="cv-document statement-document"><div><p class="row-label">Statement</p><h2 data-tina-field={tinaField(data, 'statementTitle')}>{data.statementTitle}</h2><p data-tina-field={tinaField(data, 'statementText')}>{data.statementText}</p></div>{data.statementUrl && <a href={data.statementUrl}>Read statement →</a>}</article></section>
+	</main>
+) : data?._sys.filename === 'people' ? (
+	<main class="page-shell info-page"><p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p><div class="info-list">{people.map((person, index) => <article class="info-row"><span class="row-number">{String(index + 1).padStart(2, '0')}</span><div><p class="row-label">{person.role}</p><h2>{person.name}</h2>{person.researchArea && <p>{person.researchArea}</p>}</div><a href={`/people/${person._sys.filename}`}>Profile →</a></article>)}</div></main>
+) : data?._sys.filename === 'publications' ? (
+	<main class="page-shell info-page"><p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p><div class="info-list">{allPublications.map((publication) => <article class="info-row"><span class="row-number">{publication.year}</span><div><p class="row-label">{publication.journal ?? 'Publication'}</p><h2>{publication.title}</h2><p>{publication.authors}</p></div><a href={`/publications/${publication._sys.filename}`}>Details →</a></article>)}</div></main>
+) : data?.pageType === 'listing' ? (
+	<main class="page-shell info-page"><p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p><div class="info-list">{(data.items ?? []).filter(isPresent).map((item, index) => <article class="info-row"><span class="row-number">{String(index + 1).padStart(2, '0')}</span><div><p class="row-label" data-tina-field={tinaField(item, 'label')}>{item.label}</p><h2 data-tina-field={tinaField(item, 'title')}>{item.title}</h2><p data-tina-field={tinaField(item, 'detail')}>{item.detail}</p></div>{item.link && <a href={item.link} data-tina-field={tinaField(item, 'link')}>{item.linkText || 'Details'} →</a>}</article>)}</div></main>
+) : data ? <Blocks data={data} /> : null}

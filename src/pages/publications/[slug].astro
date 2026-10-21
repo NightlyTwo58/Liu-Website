@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import PublicationBody from '../../components/islands/PublicationBody.astro';
+import { getPublication, listPublications } from '../../lib/data';
+import { islands } from '../../lib/islands';
+export async function getStaticPaths() { return (await listPublications()).map((publication) => ({ params: { slug: publication._sys.filename } })); }
+const slug = Astro.params.slug ?? '';
+const result = await getPublication(slug);
+const data = result.data?.publication;
+if (!data) return new Response('Not Found', { status: 404 });
+---
+<Base title={`${data.title} | Publications`} description={`${data.authors} · ${data.year}`}>
+	<TinaIsland name="publication" wrapper={islands.publication.wrapper} params={{ slug }} primary><PublicationBody data={data} /></TinaIsland>
+</Base>

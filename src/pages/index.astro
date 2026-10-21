@@ -1,25 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import PageBody from '../components/islands/PageBody.astro';
+import { getConfig, getPage } from '../lib/data';
+import { islands } from '../lib/islands';
+const slug = 'home';
+const result = await getPage(slug);
+const data = result.data?.page;
+const config = (await getConfig()).data?.config ?? null;
+if (!data) return new Response('Not Found', { status: 404 });
 ---
-<Base title="［Professor Name］ | ［University］" description="Academic profile, research, publications, and group information for Professor ［Name］.">
-	<main class="page-shell home-page">
-		<section class="intro-grid" aria-labelledby="profile-title">
-			<div>
-				<p class="eyebrow">［Department］ · ［University］</p>
-				<h1 id="profile-title">Professor<br />［Full Name］</h1>
-				<p class="role-line">［Title / Chair / Appointment］</p>
-				<p class="lead">I study ［research area］, with a focus on ［specific question or problem］. My group combines ［methods］ to understand ［broader impact］.</p>
-				<div class="contact-line"><a href="mailto:name@university.edu">name@university.edu</a><span>［Building, Room］</span><a href="/students">Join the group →</a></div>
-			</div>
-			<aside class="profile-facts" aria-label="Profile details">
-				<div class="portrait-placeholder" role="img" aria-label="Portrait placeholder"><span>Portrait</span></div>
-				<dl><div><dt>Office</dt><dd>［Building, Room］</dd></div><div><dt>Hours</dt><dd>［Day, time］ or by appointment</dd></div><div><dt>CV</dt><dd><a href="#">Download PDF ↗</a></dd></div></dl>
-			</aside>
-		</section>
-		<section class="home-columns">
-			<div class="section-block"><div class="section-heading"><h2>Research</h2><a href="/research">Overview →</a></div><p>Our work asks how ［system / phenomenon］ responds to ［key factor］. Current projects span ［topic one］, ［topic two］, and ［topic three］.</p><ul class="topic-list"><li>［Research theme one］</li><li>［Research theme two］</li><li>［Research theme three］</li></ul></div>
-			<div class="section-block"><div class="section-heading"><h2>Recent updates</h2><a href="/publications">All publications →</a></div><ul class="updates-list"><li><time>［Month 2025］</time><span>［Paper or project update］ — ［Journal / venue］</span></li><li><time>［Month 2025］</time><span>［Group news, award, or talk］</span></li><li><time>［Month 2024］</time><span>［Paper or project update］ — ［Journal / venue］</span></li></ul></div>
-		</section>
-		<section class="section-block selected-work"><div class="section-heading"><h2>Selected work</h2><a href="/publications">Browse publications →</a></div><ol class="publication-list"><li><span class="pub-year">2025</span><div><strong>［Title of recent paper］</strong><p>［Author One］, ［Author Two］, and ［Professor Name］. <em>［Journal Name］</em>.</p></div><a href="#">DOI ↗</a></li><li><span class="pub-year">2024</span><div><strong>［Title of paper］</strong><p>［Author One］ and ［Professor Name］. <em>［Journal Name］</em>.</p></div><a href="#">PDF ↗</a></li></ol></section>
-	</main>
+<Base title={data.seoTitle || '［Professor Name］ | ［University］'} description={config?.seo?.description ?? 'Academic profile, research, publications, and group information for Professor ［Name］.'}>
+	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary><PageBody data={data} /></TinaIsland>
 </Base>

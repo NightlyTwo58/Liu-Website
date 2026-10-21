@@ -7,19 +7,21 @@
 import type { IslandRegistry } from '@tinacms/astro/experimental';
 import type { QueryResult } from '@tinacms/astro/data';
 
-import type { BlogQuery, ConfigQuery, PageQuery } from '../../tina/__generated__/types';
-import type { CmsBlog, CmsConfig, CmsPage } from './data';
+import type { BlogQuery, ConfigQuery, PageQuery, PersonQuery, PublicationQuery } from '../../tina/__generated__/types';
+import type { CmsBlog, CmsConfig, CmsPage, CmsPerson, CmsPublication } from './data';
 import PageBody from '../components/islands/PageBody.astro';
 import BlogBody from '../components/islands/BlogBody.astro';
+import PersonBody from '../components/islands/PersonBody.astro';
+import PublicationBody from '../components/islands/PublicationBody.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getBlog, getConfig, getPage } from './data';
+import { getBlog, getConfig, getPage, getPerson, getPublication } from './data';
 
 export const islands: IslandRegistry = {
 	page: {
 		fetch: (_request, params) => getPage(params.get('slug') ?? 'home'),
 		component: PageBody,
-		wrapper: { tag: 'main' },
+		wrapper: { tag: 'div' },
 		propsFromData: (data) => ({
 			data: (data as QueryResult<PageQuery>).data?.page as CmsPage | undefined,
 		}),
@@ -31,6 +33,18 @@ export const islands: IslandRegistry = {
 		propsFromData: (data) => ({
 			data: (data as QueryResult<BlogQuery>).data?.blog as CmsBlog | undefined,
 		}),
+	},
+	person: {
+		fetch: (_request, params) => getPerson(params.get('slug') ?? ''),
+		component: PersonBody,
+		wrapper: { tag: 'article' },
+		propsFromData: (data) => ({ data: (data as QueryResult<PersonQuery>).data?.person as CmsPerson | undefined }),
+	},
+	publication: {
+		fetch: (_request, params) => getPublication(params.get('slug') ?? ''),
+		component: PublicationBody,
+		wrapper: { tag: 'article' },
+		propsFromData: (data) => ({ data: (data as QueryResult<PublicationQuery>).data?.publication as CmsPublication | undefined }),
 	},
 	global: {
 		fetch: () => getConfig(),

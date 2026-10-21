@@ -1,8 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import InfoPage from '../components/InfoPage.astro';
-const items = [{ label: 'Principal investigator', title: 'Professor ［Full Name］', detail: '［Short biography, research interests, and selected background.］', link: 'mailto:name@university.edu' }, { label: 'Graduate researcher', title: '［Student Name］', detail: '［Research topic］ · ［Program / year］ · ［Personal page or email］', link: '#' }, { label: 'Research staff', title: '［Colleague Name］', detail: '［Role and area of work］ · ［Contact or profile link］', link: '#' }];
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import PageBody from '../components/islands/PageBody.astro';
+import { getConfig, getPage } from '../lib/data';
+import { islands } from '../lib/islands';
+const slug = 'people';
+const result = await getPage(slug);
+const data = result.data?.page;
+const config = (await getConfig()).data?.config ?? null;
+if (!data) return new Response('Not Found', { status: 404 });
 ---
-<Base title="People | ［Professor Name］" description="Meet the researchers, students, and collaborators in ［Lab / Group Name］. Update each entry with a short bio and relevant links.">
-	<main><InfoPage title="People" eyebrow="Our group" intro="Meet the researchers, students, and collaborators in ［Lab / Group Name］. Update each entry with a short bio and relevant links." items={items} /></main>
+<Base title={data.seoTitle || 'People | ［Professor Name］'} description={data.intro || config?.seo?.description || ''}>
+	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary><PageBody data={data} /></TinaIsland>
 </Base>

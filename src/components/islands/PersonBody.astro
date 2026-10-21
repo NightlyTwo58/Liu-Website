@@ -1,0 +1,15 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import type { CmsPerson } from '../../lib/data';
+interface Props { data?: CmsPerson | null }
+const { data } = Astro.props;
+---
+{data && <main class="page-shell info-page">
+	<p class="eyebrow" data-tina-field={tinaField(data, 'role')}>{data.role}</p>
+	<h1 data-tina-field={tinaField(data, 'name')}>{data.name}</h1>
+	{data.researchArea && <p class="lead page-lead" data-tina-field={tinaField(data, 'researchArea')}>{data.researchArea}</p>}
+	<div class="cms-prose" data-tina-field={tinaField(data, 'bio')}><TinaMarkdown content={data.bio} /></div>
+	<div class="contact-line">{data.email && <a href={`mailto:${data.email}`} data-tina-field={tinaField(data, 'email')}>{data.email}</a>}{data.website && <a href={data.website} data-tina-field={tinaField(data, 'website')}>Personal website ↗</a>}</div>
+	<a href="/people">← All group members</a>
+</main>}

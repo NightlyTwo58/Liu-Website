@@ -1,8 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import InfoPage from '../components/InfoPage.astro';
-const items = [{ label: 'Fall · ［Year］', title: '［Course number］ — ［Course title］', detail: '［Brief description, meeting information, and course site or syllabus link.］', link: '#' }, { label: 'Spring · ［Year］', title: '［Course number］ — ［Course title］', detail: '［Brief description, meeting information, and course site or syllabus link.］', link: '#' }, { label: 'Advising', title: 'Office hours and student support', detail: 'Office hours: ［day and time］, ［location］. Contact me by email to arrange another time.', link: 'mailto:name@university.edu' }];
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import PageBody from '../components/islands/PageBody.astro';
+import { getConfig, getPage } from '../lib/data';
+import { islands } from '../lib/islands';
+const slug = 'teaching';
+const result = await getPage(slug);
+const data = result.data?.page;
+const config = (await getConfig()).data?.config ?? null;
+if (!data) return new Response('Not Found', { status: 404 });
 ---
-<Base title="Teaching | ［Professor Name］" description="Current and recent courses taught by Professor ［Name］. Add syllabi, course sites, office hours, and advising information.">
-	<main><InfoPage title="Teaching" eyebrow="Courses and advising" intro="Current and recent courses taught by Professor ［Name］. Add syllabi, course sites, office hours, and advising information." items={items} /></main>
+<Base title={data.seoTitle || 'Teaching | ［Professor Name］'} description={data.intro || config?.seo?.description || ''}>
+	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary><PageBody data={data} /></TinaIsland>
 </Base>

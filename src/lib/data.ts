@@ -24,6 +24,12 @@ export const getPage = (slug: string) =>
 export const getBlog = (slug: string) =>
 	requestWithMetadata(client.queries.blog({ relativePath: `${slug}.mdx` }), { priority: 'primary' });
 
+export const getPerson = (slug: string) =>
+	requestWithMetadata(client.queries.person({ relativePath: `${slug}.mdx` }), { priority: 'primary' });
+
+export const getPublication = (slug: string) =>
+	requestWithMetadata(client.queries.publication({ relativePath: `${slug}.mdx` }), { priority: 'primary' });
+
 export async function listPages() {
 	const result = await client.queries.pageConnection();
 	return (result.data.pageConnection.edges ?? [])
@@ -41,9 +47,23 @@ export async function listBlogs() {
 		});
 }
 
+export async function listPeople() {
+	const result = await client.queries.personConnection();
+	return (result.data.personConnection.edges ?? []).flatMap((edge) => edge?.node ? [edge.node] : []);
+}
+
+export async function listPublications() {
+	const result = await client.queries.publicationConnection();
+	return (result.data.publicationConnection.edges ?? [])
+		.flatMap((edge) => edge?.node ? [edge.node] : [])
+		.sort((a, b) => b.year - a.year);
+}
+
 export type CmsConfig = Awaited<ReturnType<typeof getConfig>>['data']['config'];
 export type CmsPage = Awaited<ReturnType<typeof getPage>>['data']['page'];
 export type CmsBlog = Awaited<ReturnType<typeof getBlog>>['data']['blog'];
+export type CmsPerson = Awaited<ReturnType<typeof getPerson>>['data']['person'];
+export type CmsPublication = Awaited<ReturnType<typeof getPublication>>['data']['publication'];
 
 export type PageBlock = NonNullable<NonNullable<CmsPage['blocks']>[number]>;
 export type PageBlockTypename = PageBlock['__typename'];

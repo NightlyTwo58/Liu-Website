@@ -10,6 +10,6 @@ const data = result.data?.page;
 const config = (await getConfig()).data?.config ?? null;
 if (!data) return new Response('Not Found', { status: 404 });
 ---
-<Base title={data.seoTitle || 'Students | ［Professor Name］'} description={data.intro || config?.seo?.description || ''}>
+<Base title={data.seoTitle || 'Prospective Students | Peng Liu'} description={data.intro || config?.seo?.description || ''}>
 	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary><PageBody data={data} /></TinaIsland>
 </Base>

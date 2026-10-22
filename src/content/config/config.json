@@ -1,43 +1,43 @@
 {
   "seo": {
-    "title": "TinaCMS + Astro",
-    "description": "Welcome to my website!",
-    "siteOwner": "TinaCMS",
-    "logo": "/orange-llama.svg"
+    "title": "Peng (Peter) Liu | Cornell University",
+    "description": "Peng Liu is a professor of real estate and finance at Cornell University. Explore his research, publications, teaching, and professional background.",
+    "siteOwner": "Peng (Peter) Liu",
+    "logo": "/peter.jpg"
   },
   "nav": [
     {
-      "title": "Home",
+      "title": "About",
       "link": "/"
     },
     {
-      "title": "Blog",
-      "link": "/blog"
+      "title": "Research",
+      "link": "/research"
     },
     {
-      "title": "About",
-      "link": "/about"
+      "title": "Publications",
+      "link": "/publications"
     }
   ],
   "contactLinks": [
     {
-      "title": "X",
-      "link": "https://x.com/tinacms",
+      "title": "CV",
+      "link": "https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333",
       "icon": "tabler:brand-x"
     },
     {
-      "title": "Docs",
-      "link": "https://tina.io/docs",
+      "title": "Cornell profile",
+      "link": "https://business.cornell.edu/profiles/pl333/",
       "icon": "tabler:book-2"
     },
     {
-      "title": "GitHub",
-      "link": "https://github.com/tinacms/tinacms",
+      "title": "eCommons",
+      "link": "https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng",
       "icon": "tabler:brand-github"
     },
     {
-      "title": "Discord",
-      "link": "https://tina.io/discord",
+      "title": "Email",
+      "link": "mailto:pl333@cornell.edu",
       "icon": "tabler:brand-discord"
     }
   ]

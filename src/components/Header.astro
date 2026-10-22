@@ -1,19 +1,22 @@
 ---
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
-	{ label: 'Home', href: '/' },
+	{ label: 'About', href: '/' },
 	{ label: 'Research', href: '/research' },
 	{ label: 'Publications', href: '/publications' },
 	{ label: 'People', href: '/people' },
 	{ label: 'Prospective students', href: '/students' },
 	{ label: 'Teaching', href: '/teaching' },
+	{ label: 'Honors & service', href: '/cv' },
 ];
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
-<header class="site-header">
-	<div class="header-inner">
-		<a class="wordmark" href="/">Professor <span>［Name］</span></a>
-		<nav aria-label="Main navigation" class="main-nav">
-			{links.map(link => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}
-		</nav>
+<nav class="top-nav" aria-label="Main navigation"><div class="top-nav-inner">{links.map((link) => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}</div></nav>
+<aside class="side">
+	<div class="side-inner">
+		<a class="portrait" href="/" aria-label="Peng Liu home"><img src="/peter.jpg" alt="" /></a>
+		<div class="side-identity"><h1 class="name">Peng (Peter) Liu</h1><p class="side-role">Professor of Real Estate and Finance</p></div>
+		<p class="side-title">Singapore Tourism Board Distinguished Professor in Asian Hospitality Management<br />Nolan School of Hotel Administration<br />Cornell SC Johnson College of Business</p>
+		<dl class="contact"><div><dt>Phone</dt><dd>607.254.2960</dd></div><div><dt>Office</dt><dd>448 Statler Hall<br />Ithaca, NY 14853-6201</dd></div></dl>
+		<nav class="side-links" aria-label="Profile and contact links"><a href="mailto:pl333@cornell.edu">Email</a><a href="https://business.cornell.edu/profiles/pl333/">Cornell profile</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a></nav>
 	</div>
-</header>
+</aside>

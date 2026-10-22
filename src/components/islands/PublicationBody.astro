@@ -4,12 +4,15 @@ import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import type { CmsPublication } from '../../lib/data';
 interface Props { data?: CmsPublication | null }
 const { data } = Astro.props;
+const orcidLookup = 'https://orcid.org/orcid-search/search?searchQuery=Peng%20Liu%20Cornell';
 ---
 {data && <main class="page-shell info-page">
 	<p class="eyebrow"><span data-tina-field={tinaField(data, 'year')}>{data.year}</span>{data.journal && <> · <span data-tina-field={tinaField(data, 'journal')}>{data.journal}</span></>}</p>
 	<h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
 	<p class="lead page-lead" data-tina-field={tinaField(data, 'authors')}>{data.authors}</p>
+	{data.citation && <p class="citation" data-tina-field={tinaField(data, 'citation')}>{data.citation}</p>}
+	{data.status && <p><span class="working-status">{data.status}</span></p>}
 	<div class="cms-prose" data-tina-field={tinaField(data, 'abstract')}><TinaMarkdown content={data.abstract} /></div>
-	<div class="contact-line">{data.doi && <a href={`https://doi.org/${data.doi}`} data-tina-field={tinaField(data, 'doi')}>DOI ↗</a>}{data.paperUrl && <a href={data.paperUrl} data-tina-field={tinaField(data, 'paperUrl')}>Paper ↗</a>}{data.pdfUrl && <a href={data.pdfUrl} data-tina-field={tinaField(data, 'pdfUrl')}>PDF ↗</a>}</div>
+	<div class="publication-meta-links">{data.doi && <a href={`https://doi.org/${data.doi}`} data-tina-field={tinaField(data, 'doi')}>DOI ↗</a>}{data.paperUrl && <a href={data.paperUrl} data-tina-field={tinaField(data, 'paperUrl')}>Paper ↗</a>}{data.pdfUrl && <a href={data.pdfUrl} data-tina-field={tinaField(data, 'pdfUrl')}>PDF ↗</a>}<a href={data.authorOrcid || orcidLookup} data-tina-field={data.authorOrcid ? tinaField(data, 'authorOrcid') : undefined}>ORCID search ↗</a></div>
 	<a href="/publications">← All publications</a>
 </main>}

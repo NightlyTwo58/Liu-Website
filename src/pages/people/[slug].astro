@@ -10,6 +10,6 @@ const result = await getPerson(slug);
 const data = result.data?.person;
 if (!data) return new Response('Not Found', { status: 404 });
 ---
-<Base title={`${data.name} | ［Professor Name］`} description={data.researchArea ?? 'Group member profile.'}>
+<Base title={`${data.name} | Peng Liu`} description={data.researchArea ?? 'Research profile at Cornell University.'}>
 	<TinaIsland name="person" wrapper={islands.person.wrapper} params={{ slug }} primary><PersonBody data={data} /></TinaIsland>
 </Base>

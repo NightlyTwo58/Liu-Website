@@ -1,0 +1,336 @@
+<!doctype html>
+<!--
+  Faculty website template: SIDEBAR
+  ---------------------------------------------------------------
+  One file, no build step. Edit the text directly and upload to any
+  static host (GitHub Pages, Cornell web hosting, Netlify).
+
+  Quick edits
+  - Photo: replace the <div class="portrait"> block with
+           <img class="portrait" src="photo.jpg" alt="Peng (Peter) Liu">
+  - Colors: change the tokens in :root (and the dark-mode block below it).
+  - Sections: each <section> is self-contained; delete or reorder freely.
+    Keep the sidebar nav links in sync with the section ids.
+  Lines marked EDIT are placeholders to check before publishing.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peng (Peter) Liu | Cornell University</title>
+<meta name="description" content="Peng (Peter) Liu, Professor of Real Estate and Finance, Nolan School of Hotel Administration, Cornell SC Johnson College of Business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Spectral:wght@500;600&display=swap">
+<style>
+  /* Layout: fixed identity sidebar on the left, long scrolling record on the right; stacks on phones. */
+  :root {
+    --bg: #fdfcfb;
+    --panel: #f4f1ee;
+    --ink: #1f1a17;
+    --muted: #6b625c;
+    --rule: #e3ddd7;
+    --accent: #a3192c;
+    --accent-soft: #f6e3e5;
+    --display: "Spectral", Georgia, "Times New Roman", serif;
+    --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --ui: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161312;
+      --panel: #1e1a18;
+      --ink: #eee8e3;
+      --muted: #a79d95;
+      --rule: #342d29;
+      --accent: #e47a86;
+      --accent-soft: #3a2124;
+      color-scheme: dark;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Extend the sidebar panel to the left edge on wide screens. */
+  @media (min-width: 901px) {
+    body { background: linear-gradient(to right, var(--panel) 50%, var(--bg) 50%); }
+    main { background: var(--bg); }
+  }
+  a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    max-width: 1180px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    background: var(--panel);
+    border-right: 1px solid var(--rule);
+    padding: 48px 32px;
+  }
+  .side-inner { position: sticky; top: 40px; display: grid; gap: 28px; }
+  .portrait {
+    width: 132px; aspect-ratio: 4 / 5; max-width: 100%;
+    border-radius: 3px; object-fit: cover;
+    background: var(--accent-soft);
+    display: grid; place-items: center;
+    font: 600 44px/1 var(--display); color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .name { font: 600 30px/1.15 var(--display); margin: 0; text-wrap: balance; }
+  .name small { display: block; font: 400 15px/1.4 var(--ui); color: var(--muted); margin-top: 6px; letter-spacing: 0; }
+  .titles { font: 400 14.5px/1.5 var(--ui); color: var(--ink); margin: 0; display: grid; gap: 6px; }
+  .titles span { color: var(--muted); }
+  .contact { font: 400 14px/1.55 var(--ui); margin: 0; display: grid; gap: 10px; }
+  .contact dt { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .contact dd { margin: 0; overflow-wrap: anywhere; }
+  .side nav { display: grid; gap: 2px; font: 500 14px/1.3 var(--ui); border-top: 1px solid var(--rule); padding-top: 20px; }
+  .side nav a { color: var(--ink); text-decoration: none; padding: 5px 0; }
+  .side nav a:hover { color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; font: 500 13px/1 var(--ui); }
+  .links a {
+    text-decoration: none; color: var(--accent);
+    border: 1px solid var(--rule); background: var(--bg);
+    padding: 8px 11px; border-radius: 3px;
+  }
+  .links a:hover { border-color: var(--accent); }
+
+  /* ---------- Main ---------- */
+  main { padding: 56px 64px 80px; min-width: 0; }
+  section { max-width: 68ch; padding-bottom: 44px; margin-bottom: 44px; border-bottom: 1px solid var(--rule); scroll-margin-top: 24px; }
+  section:last-of-type { border-bottom: 0; }
+  h2 {
+    font: 600 13px/1 var(--ui); letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 22px;
+  }
+  h3 { font: 600 19px/1.3 var(--display); margin: 28px 0 12px; }
+  p { margin: 0 0 14px; }
+  .lede { font-size: 20px; line-height: 1.55; }
+  ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+
+  .roles { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 8px; font: 400 15px/1.45 var(--ui); }
+  .roles li { position: relative; padding-left: 19px; }
+  .roles li::before { content: ""; position: absolute; left: 0; top: 0.58em; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+
+  /* Publications */
+  .pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .pubs li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 14px; }
+  .yr { font: 500 14px/1.7 var(--ui); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .pubs.wp li { grid-template-columns: minmax(0, 1fr); }
+  .cite { margin: 0; }
+  .cite .t { font-weight: 600; }
+  .cite .j { font-style: italic; }
+  .me { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  .doi { font: 500 12.5px/1 var(--ui); margin-left: 4px; white-space: nowrap; }
+  .status {
+    display: inline-block; font: 600 11px/1 var(--ui); letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft); padding: 4px 7px; border-radius: 3px; margin-left: 6px;
+    vertical-align: 2px;
+  }
+
+  /* Two-column fact rows (education, honors, service) */
+  .rows { margin: 0; display: grid; gap: 10px; }
+  .rows > div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 14px; }
+  .rows dt { font: 500 14px/1.7 var(--ui); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .rows dd { margin: 0; }
+
+  .course { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 14px; margin-bottom: 14px; }
+  .course .code { font: 600 14px/1.7 var(--ui); color: var(--accent); }
+  .course p { margin: 0; }
+  .course .meta { font: 400 14px/1.5 var(--ui); color: var(--muted); }
+
+  footer { font: 400 13px/1.5 var(--ui); color: var(--muted); }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: minmax(0, 1fr); }
+    .side { border-right: 0; border-bottom: 1px solid var(--rule); padding: 32px 20px; }
+    .side-inner { position: static; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; row-gap: 20px; }
+    .portrait { width: 88px; font-size: 30px; }
+    .name { align-self: center; }
+    .titles, .contact, .links, .side nav { grid-column: 1 / -1; }
+    .side nav { grid-auto-flow: column; overflow-x: auto; gap: 18px; justify-content: start; }
+    .side nav a { white-space: nowrap; }
+    main { padding: 36px 20px 64px; }
+    .name { font-size: 26px; }
+  }
+  @media (max-width: 520px) {
+    body { font-size: 16px; }
+    .lede { font-size: 18px; }
+    .pubs li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .rows > div, .course { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="side">
+    <div class="side-inner">
+      <!-- EDIT: swap this block for <img class="portrait" src="photo.jpg" alt="Peng (Peter) Liu"> -->
+      <div class="portrait" role="img" aria-label="Photo placeholder">PL</div>
+
+      <h1 class="name">Peng (Peter) Liu</h1>
+
+      <p class="titles">
+        Professor of Real Estate and Finance
+        <span>Singapore Tourism Board Distinguished Professor in Asian Hospitality Management</span>
+        <span>Nolan School of Hotel Administration, Cornell SC Johnson College of Business</span>
+      </p>
+
+      <dl class="contact">
+        <div><dt>Email</dt><dd><a href="mailto:pl333@cornell.edu">pl333@cornell.edu</a></dd></div>
+        <div><dt>Phone</dt><dd>607.254.2960</dd></div>
+        <div><dt>Office</dt><dd>448 Statler Hall<br>Ithaca, NY 14853-6201</dd></div>
+      </dl>
+
+      <div class="links">
+        <a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a>
+        <a href="https://business.cornell.edu/profiles/pl333/">Cornell profile</a>
+        <a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a>
+        <!-- EDIT: add your Google Scholar / SSRN links -->
+        <!-- <a href="https://scholar.google.com/citations?user=XXXX">Google Scholar</a> -->
+      </div>
+
+      <nav aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#working">Working papers</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#honors">Honors</a>
+        <a href="#service">Service</a>
+      </nav>
+    </div>
+  </aside>
+
+  <main>
+    <section id="about">
+      <h2>About</h2>
+      <p class="lede">I study how financial markets interact with the real economy, with a focus on the valuation and financing of real assets: commercial real estate, hotels, REITs, securitized debt, and commodities.</p>
+      <p>I am Professor of Real Estate and Finance at the Nolan School of Hotel Administration in the Cornell SC Johnson College of Business, where I have taught since 2007, and an inaugural faculty member of the Rubacha Department of Real Estate. Before Cornell I was a research fellow at the Fisher Center for Real Estate and Urban Economics at UC Berkeley, and I have worked at Goldman Sachs Asset Management and Deloitte Consulting in Beijing.</p>
+      <ul class="roles">
+        <li>Academic Director, Cornell–Peking University MMH/MBA Dual Degree</li>
+        <li>Faculty Research Director, Cornell SC Johnson Center for Real Estate and Finance</li>
+        <li>Deputy Area Chair, Applied Economics and Policy</li>
+        <li>Editor, <em>Journal of Real Estate Portfolio Management</em></li>
+        <li>Faculty Coordinator, Minor in Real Estate</li>
+      </ul>
+    </section>
+
+    <section id="research">
+      <h2>Research interests</h2>
+      <ul class="plain">
+        <li>Real estate finance, REITs, and private equity real estate funds</li>
+        <li>Hotel asset markets, brand affiliation, and hospitality investment risk</li>
+        <li>Securitization and commercial mortgage-backed securities</li>
+        <li>Commodity markets and the valuation of real assets</li>
+        <li>Applied econometrics: panel data, difference-in-differences, event studies</li>
+      </ul>
+    </section>
+
+    <section id="publications">
+      <h2>Selected publications</h2>
+      <ol class="pubs">
+        <li><span class="yr">2025</span><p class="cite">Devos, E., Feng, Z., <span class="me">Liu, P.</span>, &amp; McGonigle, M. <span class="t">Founder CEOs and REIT capital structure: A study of risk aversion and debt choice.</span> <span class="j">Journal of Real Estate Research</span>, forthcoming. <a class="doi" href="https://doi.org/10.1080/08965803.2025.2526269">DOI</a></p></li>
+        <li><span class="yr">2025</span><p class="cite">Singh, A., O’Neill, J. W., &amp; <span class="me">Liu, P.</span> <span class="t">The influence of hotel characteristics on debt servicing and default in the U.S. lodging sector.</span> <span class="j">Cornell Hospitality Quarterly</span>, 66(2), 137–155. <a class="doi" href="https://doi.org/10.1177/19389655241267241">DOI</a></p></li>
+        <li><span class="yr">2024</span><p class="cite">Yu, B., <span class="me">Liu, P.</span>, &amp; Das, P. <span class="t">Investor networks and fund performance in private equity real estate funds.</span> <span class="j">Journal of Real Estate Finance and Economics</span>, forthcoming. <a class="doi" href="https://doi.org/10.1007/s11146-024-10007-2">DOI</a></p></li>
+        <li><span class="yr">2024</span><p class="cite">Leung, D., <span class="me">Liu, P.</span>, &amp; Zhou, T. <span class="t">Competition, agglomeration, and tenant composition in shopping malls.</span> <span class="j">Real Estate Economics</span>, 52, 552–576. <a class="doi" href="https://doi.org/10.1111/1540-6229.12442">DOI</a></p></li>
+        <li><span class="yr">2023</span><p class="cite"><span class="me">Liu, P.</span>, Freybote, J., &amp; Das, P. <span class="t">Brand affiliation and the hotel asset market.</span> <span class="j">International Journal of Hospitality Management</span>, 109, 103428. <a class="doi" href="https://doi.org/10.1016/j.ijhm.2023.103428">DOI</a></p></li>
+        <li><span class="yr">2023</span><p class="cite">Wu, L., <span class="me">Liu, P.</span>, &amp; Le, D. <span class="t">The role of public space in constructing experience capital: A longitudinal analysis in the hotel context.</span> <span class="j">Tourism Management</span>, 97, 104735. <a class="doi" href="https://doi.org/10.1016/j.tourman.2023.104735">DOI</a></p></li>
+        <li><span class="yr">2023</span><p class="cite">Feng, Z., &amp; <span class="me">Liu, P.</span> <span class="t">Introducing “focused firms”: Implications from REIT prime operating revenue.</span> <span class="j">Journal of Real Estate Finance and Economics</span>, 67(3), 545–578.</p></li>
+        <li><span class="yr">2021</span><p class="cite">Chen, P., Kozhanov, I., <span class="me">Liu, P.</span>, &amp; Wu, C. <span class="t">Commercial mortgage-backed security pricing with real estate liquidity risk.</span> <span class="j">Real Estate Economics</span>, 49(S2), 490–525.</p></li>
+        <li><span class="yr">2021</span><p class="cite"><span class="me">Liu, P.</span>, &amp; Xie, J. <span class="t">Optimal contract design in residential brokerage.</span> <span class="j">Real Estate Economics</span>, 49(2), 493–530.</p></li>
+        <li><span class="yr">2013</span><p class="cite">Casassus, J., <span class="me">Liu, P.</span>, &amp; Tang, K. <span class="t">Economic linkages, relative scarcity, and commodity futures returns.</span> <span class="j">Review of Financial Studies</span>, 26(5), 1324–1362.</p></li>
+        <li><span class="yr">2012</span><p class="cite"><span class="me">Liu, P.</span>, &amp; Zhang, J. <span class="t">Rational herding in microloan markets.</span> <span class="j">Management Science</span>, 58(5), 892–912.</p></li>
+      </ol>
+      <p style="margin-top:22px"><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">Full list in CV →</a></p>
+
+      <h3>Books, chapters, and cases</h3>
+      <ul class="plain">
+        <li><em>Hospitality Financial Management and Contextualized Decision Making</em>, 2nd ed. (2025), with coauthors. <!-- EDIT: add coauthors and publisher --></li>
+        <li><em>Culture and Tourism</em> (2025, in Chinese), with S. Zhang. Renmin University Press.</li>
+        <li>“Private equity real estate funds.” <em>Palgrave Encyclopedia of Private Equity</em> (2024), with P. Das.</li>
+        <li>“Private equity real estate investment in Shanghai.” Published case (2021), with Loh.</li>
+      </ul>
+    </section>
+
+    <section id="working">
+      <h2>Working papers</h2>
+      <ol class="pubs wp">
+        <li><p class="cite"><span class="t">The value of a brand: The case of hotels.</span> With J. Sheinberg. <span class="status">R&amp;R</span> <span class="j">Cornell Hospitality Quarterly</span></p></li>
+        <li><p class="cite"><span class="t">Real earnings management in REITs.</span> With B. Edelstein and D. Tsang. <span class="status">R&amp;R</span> <span class="j">Real Estate Economics</span></p></li>
+        <li><p class="cite"><span class="t">Appraisal bias and default in commercial real estate.</span> With A. Singh and J. W. O’Neill. <span class="status">R&amp;R</span> <span class="j">International Journal of Hospitality Management</span></p></li>
+        <li><p class="cite"><span class="t">Hotel establishment performance and the brand network externality.</span> With Z. Feng. <span class="status">Under review</span></p></li>
+        <li><p class="cite"><span class="t">Professional property management and the performance of vacation rentals.</span> With M. Medeiros and N. Hua. <span class="status">Under review</span></p></li>
+      </ol>
+    </section>
+
+    <section id="teaching">
+      <h2>Teaching</h2>
+      <div class="course">
+        <span class="code">HADM 6200</span>
+        <div>
+          <p><strong>Principles of Real Estate</strong></p>
+          <p class="meta">Graduate · Spring 2026 · Real estate finance and investment, valuation under uncertainty, and mortgage financing</p>
+        </div>
+      </div>
+      <div class="course">
+        <span class="code">MMH/MBA</span>
+        <div>
+          <p><strong>Cornell–Peking University dual degree</strong></p>
+          <p class="meta">EDIT: list the courses you teach in the program</p>
+        </div>
+      </div>
+      <p>I advise the Cornell real estate student clubs CREC and CREDIT and serve as a faculty advisor for Rawlings Cornell Presidential Research Scholars.</p>
+    </section>
+
+    <section id="honors">
+      <h2>Selected honors</h2>
+      <dl class="rows">
+        <div><dt>2022</dt><dd>Finalist, INFORMS Society Long Term Impact Award</dd></div>
+        <div><dt>2019</dt><dd>Rising Star in Real Estate Award, Shanghai</dd></div>
+        <div><dt>2016</dt><dd>Singapore Tourism Board Distinguished Professorship</dd></div>
+        <div><dt>2014</dt><dd>William N. Kinnard Scholar, American Real Estate Society</dd></div>
+        <div><dt>2014</dt><dd>Homer Hoyt Post-Doctoral Honoree</dd></div>
+        <div><dt>2006</dt><dd>Best Graduate Student Instructor, UC Berkeley Haas</dd></div>
+      </dl>
+      <p style="margin-top:16px">Multiple best paper awards from the American Real Estate Society (2011, 2012, 2018, 2019, 2024).</p>
+    </section>
+
+    <section id="service">
+      <h2>Editorial service</h2>
+      <dl class="rows">
+        <div><dt>2014–</dt><dd>Editor, <em>Journal of Real Estate Portfolio Management</em></dd></div>
+        <div><dt>Assoc. editor</dt><dd><em>Journal of Real Estate Research</em>; <em>International Real Estate Review</em>; <em>Journal of Commodity Markets</em></dd></div>
+        <div><dt>Board</dt><dd><em>Cornell Hospitality Quarterly</em> editorial board</dd></div>
+      </dl>
+
+      <h3>Education</h3>
+      <dl class="rows">
+        <div><dt>2007</dt><dd>Ph.D., Real Estate and Finance, UC Berkeley Haas School of Business</dd></div>
+        <div><dt>2007</dt><dd>M.S., Finance, UC Berkeley Haas School of Business</dd></div>
+        <div><dt>2000</dt><dd>M.A., Financial Economics, Peking University</dd></div>
+        <div><dt>1994</dt><dd>B.S., Engineering, Tsinghua University</dd></div>
+      </dl>
+    </section>
+
+    <footer>Last updated October 2026</footer>
+  </main>
+</div>
+</body>
+</html>

@@ -32,6 +32,12 @@ export const PublicationsCollection: Collection = {
       label: "Journal or Conference",
       type: "string",
     },
+    { name: "citation", label: "Formatted citation", type: "string", ui: { component: "textarea" } },
+    { name: "status", label: "Publication status", type: "string" },
+    { name: "category", label: "Work type", type: "string", options: ["Published article", "Working paper", "Book or chapter", "Case"] },
+    { name: "volume", label: "Volume and issue", type: "string" },
+    { name: "pages", label: "Pages or article number", type: "string" },
+    { name: "authorOrcid", label: "Author ORCID URL", type: "string", description: "ORCID link" },
     {
       name: "doi",
       label: "DOI",

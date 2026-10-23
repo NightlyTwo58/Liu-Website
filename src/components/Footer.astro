@@ -1,6 +1,7 @@
 ---
 const year = new Date().getFullYear();
+const isZh = Astro.url.pathname === '/zh' || Astro.url.pathname.startsWith('/zh/');
 ---
 <footer class="site-footer">
-	<div>© {year} Peng Liu · Cornell University</div>
+	<div>© {year} Peng Liu · {isZh ? '康奈尔大学' : 'Cornell University'}</div>
 </footer>

@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChinesePageBody from '../../components/islands/ChinesePageBody.astro';
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { getPage, getPublication, listPages, listPublications, getPerson, listPeople } from '../../lib/data';
+export async function getStaticPaths() {
+ const [pages, publications, people] = await Promise.all([listPages(), listPublications(), listPeople()]);
+ return [
+  ...['about', 'research', 'students', 'teaching', 'cv', 'people', 'publications'].map((slug) => ({ params: { slug }, props: { kind: 'page' } })),
+  ...people.map((person) => ({ params: { slug: `people/${person._sys.filename}` }, props: { kind: 'person' } })),
+  ...publications.map((publication) => ({ params: { slug: `publications/${publication._sys.filename}` }, props: { kind: 'publication' } })),
+ ];
+}
+const { kind } = Astro.props;
+const slug = String(Astro.params.slug ?? '');
+const segments = slug.split('/');
+const recordSlug = segments.at(-1) ?? '';
+let title = 'Peng Liu｜康奈尔大学';
+let description = '康奈尔大学房地产与金融学教授 Peng Liu 的学术资料。';
+let data;
+if (kind === 'page') {
+ const result = await getPage(slug);
+ data = result.data?.page;
+ title = `${data?.title ?? '学术资料'}｜Peng Liu`;
+ description = data?.intro ?? description;
+} else if (kind === 'publication') {
+ const result = await getPublication(recordSlug);
+ data = result.data?.publication;
+ title = `${data?.title ?? '学术成果'}｜Peng Liu`;
+ description = `${data?.authors ?? ''} · ${data?.year ?? ''}`;
+} else {
+ const result = await getPerson(recordSlug);
+ data = result.data?.person;
+ title = `${data?.name ?? '研究团队'}｜Peng Liu`;
+}
+if (!data) return new Response('Not Found', { status: 404 });
+---
+<Base lang="zh" title={title} description={description}>
+ {kind === 'page' ? <ChinesePageBody data={data} /> : kind === 'publication' ? <main class="page-shell info-page"><p class="eyebrow">{data.year}{data.journal ? ` · ${data.journal}` : ''}</p><h1>{data.title}</h1><p class="lead page-lead">{data.authors}</p>{data.citation && <p class="citation">{data.citation}</p>}{data.status && <p><span class="working-status">{data.status}</span></p>}<div class="cms-prose"><TinaMarkdown content={data.abstract} /></div><div class="publication-meta-links">{data.doi && <a href={`https://doi.org/${data.doi}`}>DOI</a>}{data.paperUrl && <a href={data.paperUrl}>论文</a>}{data.pdfUrl && <a href={data.pdfUrl}>PDF</a>}<a href={data.authorOrcid || 'https://orcid.org/orcid-search/search?searchQuery=Peng%20Liu%20Cornell'}>ORCID 搜索</a></div><a href="/zh/publications">全部学术成果</a></main> : <main class="page-shell info-page"><p class="eyebrow">{data.role === 'Professor of Real Estate and Finance' ? '房地产与金融学教授' : data.role}</p><h1>{data.name}</h1>{data.researchArea && <p class="lead page-lead">房地产金融、酒店业资产市场、REITs、证券化与大宗商品定价</p>}<div class="cms-prose"><p>Peng Liu 是康奈尔大学约翰逊商学院及诺兰酒店管理学院教授。他的研究关注金融市场与实体经济的互动，包括商业房地产与大宗商品的估值和融资、酒店业市场、证券化及 REITs。加入学术界之前，他曾在 Goldman Sachs Asset Management 和 Deloitte Consulting 工作。他在加州大学伯克利分校获得房地产与金融学博士学位及金融学硕士学位，在北京大学获得金融经济学硕士学位，并在清华大学获得工学学士学位。</p></div><div class="contact-line">{data.email && <a href={`mailto:${data.email}`}>电子邮件</a>}{data.website && <a href={data.website}>康奈尔大学个人主页</a>}</div><a href="/zh/people">全部团队成员</a></main>}
+</Base>

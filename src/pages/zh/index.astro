@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChinesePageBody from '../../components/islands/ChinesePageBody.astro';
+import { getConfig, getPage } from '../../lib/data';
+const result = await getPage('home');
+const data = result.data?.page;
+const config = (await getConfig()).data?.config ?? null;
+if (!data) return new Response('Not Found', { status: 404 });
+---
+<Base lang="zh" title="Peng Liu｜康奈尔大学" description="Peng Liu，康奈尔大学房地产与金融学教授。研究方向、学术成果、教学与学术经历。">
+ <ChinesePageBody data={data} />
+</Base>

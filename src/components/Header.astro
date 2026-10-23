@@ -1,22 +1,25 @@
 ---
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isZh = path === '/zh' || path.startsWith('/zh/');
+const enPath = isZh ? (path.replace(/^\/zh/, '') || '/') : path;
+const zhPath = isZh ? path : `/zh${path === '/' ? '' : path}`;
 const links = [
-	{ label: 'About', href: '/' },
-	{ label: 'Research', href: '/research' },
-	{ label: 'Publications', href: '/publications' },
-	{ label: 'People', href: '/people' },
-	{ label: 'Prospective students', href: '/students' },
-	{ label: 'Teaching', href: '/teaching' },
-	{ label: 'Honors & service', href: '/cv' },
+	{ label: isZh ? '首页' : 'About', href: isZh ? '/zh' : '/' },
+	{ label: isZh ? '研究方向' : 'Research', href: isZh ? '/zh/research' : '/research' },
+	{ label: isZh ? '学术成果' : 'Publications', href: isZh ? '/zh/publications' : '/publications' },
+	{ label: isZh ? '团队成员' : 'People', href: isZh ? '/zh/people' : '/people' },
+	{ label: isZh ? '学生信息' : 'Prospective students', href: isZh ? '/zh/students' : '/students' },
+	{ label: isZh ? '教学' : 'Teaching', href: isZh ? '/zh/teaching' : '/teaching' },
+	{ label: isZh ? '荣誉与学术服务' : 'Honors & service', href: isZh ? '/zh/cv' : '/cv' },
 ];
 ---
-<nav class="top-nav" aria-label="Main navigation"><div class="top-nav-inner">{links.map((link) => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}</div></nav>
+<nav class="top-nav" aria-label={isZh ? '主导航' : 'Main navigation'}><div class="top-nav-inner"><a class="language-toggle" href={isZh ? enPath : zhPath} lang={isZh ? 'en' : 'zh'}>{isZh ? 'English' : '中文'}</a>{links.map((link) => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}</div></nav>
 <aside class="side">
 	<div class="side-inner">
-		<a class="portrait" href="/" aria-label="Peng Liu home"><img src="/peter.jpg" alt="" /></a>
-		<div class="side-identity"><h1 class="name">Peng (Peter) Liu</h1><p class="side-role">Professor of Real Estate and Finance</p></div>
-		<p class="side-title">Singapore Tourism Board Distinguished Professor in Asian Hospitality Management<br />Nolan School of Hotel Administration<br />Cornell SC Johnson College of Business</p>
-		<dl class="contact"><div><dt>Phone</dt><dd>607.254.2960</dd></div><div><dt>Office</dt><dd>448 Statler Hall<br />Ithaca, NY 14853-6201</dd></div></dl>
-		<nav class="side-links" aria-label="Profile and contact links"><a href="mailto:pl333@cornell.edu">Email</a><a href="https://business.cornell.edu/profiles/pl333/">Cornell profile</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a></nav>
+		<a class="portrait" href={isZh ? '/zh' : '/'} aria-label={isZh ? 'Peng Liu 首页' : 'Peng Liu home'}><img src="/peter.jpg" alt="" /></a>
+		<div class="side-identity"><h1 class="name">Peng (Peter) Liu</h1><p class="side-role">{isZh ? '房地产与金融学教授' : 'Professor of Real Estate and Finance'}</p></div>
+		<p class="side-title">{isZh ? <>新加坡旅游局亚洲酒店管理杰出教授<br />诺兰酒店管理学院（Nolan School of Hotel Administration）<br />康奈尔大学约翰逊商学院（Cornell SC Johnson College of Business）</> : <>Singapore Tourism Board Distinguished Professor in Asian Hospitality Management<br />Nolan School of Hotel Administration<br />Cornell SC Johnson College of Business</>}</p>
+		<dl class="contact"><div><dt>{isZh ? '电话' : 'Phone'}</dt><dd>607.254.2960</dd></div><div><dt>{isZh ? '办公室' : 'Office'}</dt><dd>448 Statler Hall<br />Ithaca, NY 14853-6201</dd></div></dl>
+		<nav class="side-links" aria-label={isZh ? '个人资料与联系方式' : 'Profile and contact links'}><a href="mailto:pl333@cornell.edu">{isZh ? '电子邮件' : 'Email'}</a><a href="https://business.cornell.edu/profiles/pl333/">{isZh ? '康奈尔大学个人主页' : 'Cornell profile'}</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a></nav>
 	</div>
 </aside>

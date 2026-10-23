@@ -66,6 +66,14 @@ h3 { font:600 18px/1.3 var(--display); }
 .info-page h1 { font-size:clamp(30px,4vw,38px); }.info-list { margin-top:20px; border-top:1px solid var(--rule); }.info-row { display:grid; grid-template-columns:48px 1fr 100px; gap:10px; padding:12px 0; border-bottom:1px solid var(--rule); align-items:start; }.row-number { padding-top:3px; color:var(--muted); font:400 12px/1.5 var(--ui); font-variant-numeric:tabular-nums; }.info-row h2 { margin:0 0 4px; color:var(--ink); font:600 16px/1.3 var(--display); letter-spacing:0; text-transform:none; }.info-row p:last-child { margin:0; max-width:720px; color:var(--muted); }.info-row> a { justify-self:end; font:500 12px/1.5 var(--ui); }
 .site-footer { max-width:1040px; margin:0 auto; padding:18px 32px 24px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; gap:12px 24px; flex-wrap:wrap; color:var(--muted); font:400 12px/1.5 var(--ui); }.site-footer div:last-child { display:flex; gap:20px; }
 .publication-meta-links { display:flex; flex-wrap:wrap; gap:12px; margin:14px 0 18px; font:500 12px/1.4 var(--ui); }.citation { padding:12px 14px; border-left:3px solid var(--accent); background:var(--panel); }
+.publication-filters { display:flex; gap:14px; margin:14px 0; font:500 12px/1.4 var(--ui); }
+.publication-citations { list-style:none; margin:0; padding:0; border-top:1px solid var(--rule); }
+.publication-citations li { padding:9px 0; border-bottom:1px solid var(--rule); font-size:14px; line-height:1.5; }
+.publication-citation { color:var(--ink); }
+.publication-actions { display:inline; margin-left:8px; font:500 11px/1.5 var(--ui); white-space:normal; }
+.publication-actions a,.publication-actions button { margin-right:9px; }
+.publication-actions button { padding:0; border:0; color:var(--accent); background:none; font:inherit; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.publication-actions button:hover { text-decoration-thickness:2px; }
 .working-status { display:inline-block; margin-left:6px; border-radius:3px; padding:4px 7px; color:var(--accent); background:var(--accent-soft); font:600 10px/1 var(--ui); letter-spacing:.06em; text-transform:uppercase; }
 .roles { list-style:none; padding:0; margin:20px 0 0; display:grid; gap:8px; font:400 14px/1.5 var(--ui); }.roles li { position:relative; padding-left:20px; }.roles li:before { content:''; position:absolute; top:.62em; left:0; width:7px; height:7px; border-radius:50%; background:var(--accent); }
 .rows { margin:0; display:grid; gap:8px; }.rows>div { display:grid; grid-template-columns:125px minmax(0,1fr); gap:12px; }.rows dt { color:var(--muted); font:500 12px/1.5 var(--ui); }.rows dd { margin:0; }

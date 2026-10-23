@@ -13,6 +13,6 @@ const orcidLookup = 'https://orcid.org/orcid-search/search?searchQuery=Peng%20Li
 	{data.citation && <p class="citation" data-tina-field={tinaField(data, 'citation')}>{data.citation}</p>}
 	{data.status && <p><span class="working-status">{data.status}</span></p>}
 	<div class="cms-prose" data-tina-field={tinaField(data, 'abstract')}><TinaMarkdown content={data.abstract} /></div>
-	<div class="publication-meta-links">{data.doi && <a href={`https://doi.org/${data.doi}`} data-tina-field={tinaField(data, 'doi')}>DOI ↗</a>}{data.paperUrl && <a href={data.paperUrl} data-tina-field={tinaField(data, 'paperUrl')}>Paper ↗</a>}{data.pdfUrl && <a href={data.pdfUrl} data-tina-field={tinaField(data, 'pdfUrl')}>PDF ↗</a>}<a href={data.authorOrcid || orcidLookup} data-tina-field={data.authorOrcid ? tinaField(data, 'authorOrcid') : undefined}>ORCID search ↗</a></div>
-	<a href="/publications">← All publications</a>
+	<div class="publication-meta-links">{data.doi && <a href={`https://doi.org/${data.doi}`} data-tina-field={tinaField(data, 'doi')}>DOI</a>}{data.paperUrl && <a href={data.paperUrl} data-tina-field={tinaField(data, 'paperUrl')}>Paper</a>}{data.pdfUrl && <a href={data.pdfUrl} data-tina-field={tinaField(data, 'pdfUrl')}>PDF</a>}<a href={data.authorOrcid || orcidLookup} data-tina-field={data.authorOrcid ? tinaField(data, 'authorOrcid') : undefined}>ORCID search</a></div>
+	<a href="/publications">All publications</a>
 </main>}

@@ -1,7 +1,7 @@
 {
   "seo": {
     "title": "Peng (Peter) Liu | Cornell University",
-    "description": "Peng Liu is a professor of real estate and finance at Cornell University. Explore his research, publications, teaching, and professional background.",
+    "description": "Peng (Peter) Liu, full professor of real estate and finance at Cornell University.",
     "siteOwner": "Peng (Peter) Liu",
     "logo": "/peter.jpg"
   },
@@ -9,10 +9,6 @@
     {
       "title": "About",
       "link": "/"
-    },
-    {
-      "title": "Research",
-      "link": "/research"
     },
     {
       "title": "Publications",
@@ -23,22 +19,22 @@
     {
       "title": "CV",
       "link": "https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333",
-      "icon": "tabler:brand-x"
+      "icon": "tabler:file-cv"
     },
     {
       "title": "Cornell profile",
       "link": "https://business.cornell.edu/profiles/pl333/",
-      "icon": "tabler:book-2"
+      "icon": "tabler:building-community"
     },
     {
       "title": "eCommons",
       "link": "https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng",
-      "icon": "tabler:brand-github"
+      "icon": "tabler:archive"
     },
     {
       "title": "Email",
       "link": "mailto:pl333@cornell.edu",
-      "icon": "tabler:brand-discord"
+      "icon": "tabler:mail"
     }
   ]
 }

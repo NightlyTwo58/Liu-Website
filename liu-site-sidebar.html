@@ -6,8 +6,7 @@
   static host (GitHub Pages, Cornell web hosting, Netlify).
 
   Quick edits
-  - Photo: replace the <div class="portrait"> block with
-           <img class="portrait" src="photo.jpg" alt="Peng (Peter) Liu">
+  - The portrait uses the image in public/peter.jpg.
   - Colors: change the tokens in :root (and the dark-mode block below it).
   - Sections: each <section> is self-contained; delete or reorder freely.
     Keep the sidebar nav links in sync with the section ids.
@@ -181,13 +180,12 @@
 
   <aside class="side">
     <div class="side-inner">
-      <!-- EDIT: swap this block for <img class="portrait" src="photo.jpg" alt="Peng (Peter) Liu"> -->
-      <div class="portrait" role="img" aria-label="Photo placeholder">PL</div>
+      <img class="portrait" src="public/peter.jpg" alt="Peng (Peter) Liu">
 
       <h1 class="name">Peng (Peter) Liu</h1>
 
       <p class="titles">
-        Professor of Real Estate and Finance
+        Full Professor of Real Estate and Finance
         <span>Singapore Tourism Board Distinguished Professor in Asian Hospitality Management</span>
         <span>Nolan School of Hotel Administration, Cornell SC Johnson College of Business</span>
       </p>
@@ -199,16 +197,14 @@
       </dl>
 
       <div class="links">
+        <a href="public/statement.pdf">Research statement (PDF)</a>
         <a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a>
         <a href="https://business.cornell.edu/profiles/pl333/">Cornell profile</a>
         <a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a>
-        <!-- EDIT: add your Google Scholar / SSRN links -->
-        <!-- <a href="https://scholar.google.com/citations?user=XXXX">Google Scholar</a> -->
       </div>
 
       <nav aria-label="Sections">
         <a href="#about">About</a>
-        <a href="#research">Research</a>
         <a href="#publications">Publications</a>
         <a href="#working">Working papers</a>
         <a href="#teaching">Teaching</a>
@@ -222,9 +218,9 @@
     <section id="about">
       <h2>About</h2>
       <p class="lede">I study how financial markets interact with the real economy, with a focus on the valuation and financing of real assets: commercial real estate, hotels, REITs, securitized debt, and commodities.</p>
-      <p>I am Professor of Real Estate and Finance at the Nolan School of Hotel Administration in the Cornell SC Johnson College of Business, where I have taught since 2007, and an inaugural faculty member of the Rubacha Department of Real Estate. Before Cornell I was a research fellow at the Fisher Center for Real Estate and Urban Economics at UC Berkeley, and I have worked at Goldman Sachs Asset Management and Deloitte Consulting in Beijing.</p>
+      <p>I am a full professor of real estate and finance at Cornell SC Johnson College of Business. I have held the Singapore Tourism Board Distinguished Professorship in Asian Hospitality Management at the Nolan School of Hotel Administration since 2016 and became an inaugural faculty member of the Paul Rubacha Department of Real Estate in 2023. Before Cornell, I was a research fellow at UC Berkeley’s Fisher Center for Real Estate and Urban Economics (2002–2007), and worked at Goldman Sachs Asset Management in New York and Deloitte Consulting in Beijing.</p>
       <ul class="roles">
-        <li>Academic Director, Cornell–Peking University MMH/MBA Dual Degree</li>
+        <li>Academic Director, Cornell–Peking MMH/MBA Dual Degree</li>
         <li>Faculty Research Director, Cornell SC Johnson Center for Real Estate and Finance</li>
         <li>Deputy Area Chair, Applied Economics and Policy</li>
         <li>Editor, <em>Journal of Real Estate Portfolio Management</em></li>
@@ -232,23 +228,12 @@
       </ul>
     </section>
 
-    <section id="research">
-      <h2>Research interests</h2>
-      <ul class="plain">
-        <li>Real estate finance, REITs, and private equity real estate funds</li>
-        <li>Hotel asset markets, brand affiliation, and hospitality investment risk</li>
-        <li>Securitization and commercial mortgage-backed securities</li>
-        <li>Commodity markets and the valuation of real assets</li>
-        <li>Applied econometrics: panel data, difference-in-differences, event studies</li>
-      </ul>
-    </section>
-
     <section id="publications">
       <h2>Selected publications</h2>
       <ol class="pubs">
-        <li><span class="yr">2025</span><p class="cite">Devos, E., Feng, Z., <span class="me">Liu, P.</span>, &amp; McGonigle, M. <span class="t">Founder CEOs and REIT capital structure: A study of risk aversion and debt choice.</span> <span class="j">Journal of Real Estate Research</span>, forthcoming. <a class="doi" href="https://doi.org/10.1080/08965803.2025.2526269">DOI</a></p></li>
+        <li><span class="yr">2025</span><p class="cite">Devos, E., Feng, Z., <span class="me">Liu, P.</span>, &amp; McGonigle, M. <span class="t">Founder CEOs and REIT capital structure: A study of risk aversion and debt choices.</span> <span class="j">Journal of Real Estate Research</span>, advance online publication, August 7, 2025. <a class="doi" href="https://doi.org/10.1080/08965803.2025.2526269">DOI</a></p></li>
         <li><span class="yr">2025</span><p class="cite">Singh, A., O’Neill, J. W., &amp; <span class="me">Liu, P.</span> <span class="t">The influence of hotel characteristics on debt servicing and default in the U.S. lodging sector.</span> <span class="j">Cornell Hospitality Quarterly</span>, 66(2), 137–155. <a class="doi" href="https://doi.org/10.1177/19389655241267241">DOI</a></p></li>
-        <li><span class="yr">2024</span><p class="cite">Yu, B., <span class="me">Liu, P.</span>, &amp; Das, P. <span class="t">Investor networks and fund performance in private equity real estate funds.</span> <span class="j">Journal of Real Estate Finance and Economics</span>, forthcoming. <a class="doi" href="https://doi.org/10.1007/s11146-024-10007-2">DOI</a></p></li>
+        <li><span class="yr">2025</span><p class="cite">Yu, B., <span class="me">Liu, P.</span>, &amp; Das, P. <span class="t">Investor networks and fund performance in private equity real estate funds.</span> <span class="j">The Journal of Real Estate Finance and Economics</span>, advance online publication. <a class="doi" href="https://doi.org/10.1007/s11146-024-10007-2">DOI</a></p></li>
         <li><span class="yr">2024</span><p class="cite">Leung, D., <span class="me">Liu, P.</span>, &amp; Zhou, T. <span class="t">Competition, agglomeration, and tenant composition in shopping malls.</span> <span class="j">Real Estate Economics</span>, 52, 552–576. <a class="doi" href="https://doi.org/10.1111/1540-6229.12442">DOI</a></p></li>
         <li><span class="yr">2023</span><p class="cite"><span class="me">Liu, P.</span>, Freybote, J., &amp; Das, P. <span class="t">Brand affiliation and the hotel asset market.</span> <span class="j">International Journal of Hospitality Management</span>, 109, 103428. <a class="doi" href="https://doi.org/10.1016/j.ijhm.2023.103428">DOI</a></p></li>
         <li><span class="yr">2023</span><p class="cite">Wu, L., <span class="me">Liu, P.</span>, &amp; Le, D. <span class="t">The role of public space in constructing experience capital: A longitudinal analysis in the hotel context.</span> <span class="j">Tourism Management</span>, 97, 104735. <a class="doi" href="https://doi.org/10.1016/j.tourman.2023.104735">DOI</a></p></li>
@@ -262,10 +247,10 @@
 
       <h3>Books, chapters, and cases</h3>
       <ul class="plain">
-        <li><em>Hospitality Financial Management and Contextualized Decision Making</em>, 2nd ed. (2025), with coauthors. <!-- EDIT: add coauthors and publisher --></li>
+        <li>Nan, H., Bloom, B., DeFranco, A., Pepetti, T., Logan, T., Mann, D., Liu, P., Das, P., &amp; Upneja, A. (2025). <em>Hospitality Financial Management and Contextualized Decision Making</em> (2nd ed.). Kendall Hunt Publishing Company. ISBN 978-1-7924-4048-9.</li>
         <li><em>Culture and Tourism</em> (2025, in Chinese), with S. Zhang. Renmin University Press.</li>
-        <li>“Private equity real estate funds.” <em>Palgrave Encyclopedia of Private Equity</em> (2024), with P. Das.</li>
-        <li>“Private equity real estate investment in Shanghai.” Published case (2021), with Loh.</li>
+        <li>Liu, P., &amp; Das, P. (2024). “Private equity real estate funds: Unlocking opportunities.” In <em>The Palgrave Encyclopedia of Private Equity</em>. Palgrave Macmillan. <a href="https://doi.org/10.1007/978-3-030-38738-9_104-1">DOI</a></li>
+        <li>Liu, P., &amp; Loh, T. (2021). “Real Estate: Private Equity Investment in Shanghai.” Center for Hospitality Research and Center for Real Estate and Finance Case Series, 21(7).</li>
       </ul>
     </section>
 
@@ -286,14 +271,14 @@
         <span class="code">HADM 6200</span>
         <div>
           <p><strong>Principles of Real Estate</strong></p>
-          <p class="meta">Graduate · Spring 2026 · Real estate finance and investment, valuation under uncertainty, and mortgage financing</p>
+          <p class="meta">Recent graduate course · Spring 2026 · Real estate finance and investment, valuation under uncertainty, and mortgage financing</p>
         </div>
       </div>
       <div class="course">
         <span class="code">MMH/MBA</span>
         <div>
           <p><strong>Cornell–Peking University dual degree</strong></p>
-          <p class="meta">EDIT: list the courses you teach in the program</p>
+          <p class="meta">Academic Director of the dual degree program; course offerings vary by academic year.</p>
         </div>
       </div>
       <p>I advise the Cornell real estate student clubs CREC and CREDIT and serve as a faculty advisor for Rawlings Cornell Presidential Research Scholars.</p>

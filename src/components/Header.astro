@@ -5,7 +5,6 @@ const enPath = isZh ? (path.replace(/^\/zh/, '') || '/') : path;
 const zhPath = isZh ? path : `/zh${path === '/' ? '' : path}`;
 const links = [
 	{ label: isZh ? '首页' : 'About', href: isZh ? '/zh' : '/' },
-	{ label: isZh ? '研究方向' : 'Research', href: isZh ? '/zh/research' : '/research' },
 	{ label: isZh ? '学术成果' : 'Publications', href: isZh ? '/zh/publications' : '/publications' },
 	{ label: isZh ? '团队成员' : 'People', href: isZh ? '/zh/people' : '/people' },
 	{ label: isZh ? '学生信息' : 'Prospective students', href: isZh ? '/zh/students' : '/students' },
@@ -17,9 +16,9 @@ const links = [
 <aside class="side">
 	<div class="side-inner">
 		<a class="portrait" href={isZh ? '/zh' : '/'} aria-label={isZh ? 'Peng Liu 首页' : 'Peng Liu home'}><img src="/peter.jpg" alt="" /></a>
-		<div class="side-identity"><h1 class="name">Peng (Peter) Liu</h1><p class="side-role">{isZh ? '房地产与金融学教授' : 'Professor of Real Estate and Finance'}</p></div>
+		<div class="side-identity"><h1 class="name">Peng (Peter) Liu</h1><p class="side-role">{isZh ? '房地产与金融学正教授' : 'Full Professor of Real Estate and Finance'}</p></div>
 		<p class="side-title">{isZh ? <>新加坡旅游局亚洲酒店管理杰出教授<br />诺兰酒店管理学院（Nolan School of Hotel Administration）<br />康奈尔大学约翰逊商学院（Cornell SC Johnson College of Business）</> : <>Singapore Tourism Board Distinguished Professor in Asian Hospitality Management<br />Nolan School of Hotel Administration<br />Cornell SC Johnson College of Business</>}</p>
 		<dl class="contact"><div><dt>{isZh ? '电话' : 'Phone'}</dt><dd>607.254.2960</dd></div><div><dt>{isZh ? '办公室' : 'Office'}</dt><dd>448 Statler Hall<br />Ithaca, NY 14853-6201</dd></div></dl>
-		<nav class="side-links" aria-label={isZh ? '个人资料与联系方式' : 'Profile and contact links'}><a href="mailto:pl333@cornell.edu">{isZh ? '电子邮件' : 'Email'}</a><a href="https://business.cornell.edu/profiles/pl333/">{isZh ? '康奈尔大学个人主页' : 'Cornell profile'}</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a></nav>
+		<nav class="side-links" aria-label={isZh ? '个人资料与联系方式' : 'Profile and contact links'}><a href="mailto:pl333@cornell.edu">{isZh ? '电子邮件' : 'Email'}</a><a href="https://business.cornell.edu/profiles/pl333/">{isZh ? '康奈尔大学个人主页' : 'Cornell profile'}</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a><a href="https://scholar.google.com/citations?user=v1zHGQEAAAAJ&hl=en">Google Scholar</a><a href="https://orcid.org/orcid-search/search?searchQuery=Peng%20Liu%20Cornell">ORCID</a></nav>
 	</div>
 </aside>

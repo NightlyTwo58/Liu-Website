@@ -3,42 +3,27 @@ import Blocks from '../blocks/Blocks.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsPage } from '../../lib/data';
 import { listPeople, listPublications } from '../../lib/data';
+import PublicationArchive from '../PublicationArchive.astro';
 
 interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
-const featuredSlugs = ['residential-brokerage-contract-design', 'cmbs-pricing-liquidity-risk', 'commodity-futures-returns'];
-const publications = data?.profile ? (await listPublications()).filter((publication) => featuredSlugs.includes(publication._sys.filename)) : [];
 const people = data?._sys.filename === 'people' ? await listPeople() : [];
-const publicationRecords = data?._sys.filename === 'publications' ? await listPublications() : [];
-const showWorking = Astro.url.searchParams.get('type') === 'working';
-const allPublications = showWorking ? publicationRecords.filter((publication) => publication.category === 'Working paper') : publicationRecords;
-const orcidLookup = 'https://orcid.org/orcid-search/search?searchQuery=Peng%20Liu%20Cornell';
+const publicationRecords = ['home', 'publications'].includes(data?._sys.filename ?? '') ? await listPublications() : [];
+const featuredSlugs = ['cmbs-pricing-liquidity-risk', 'residential-brokerage-contract-design', 'commodity-futures-returns'];
+const featuredPublications = publicationRecords.filter((publication) => featuredSlugs.includes(publication._sys.filename));
 function isPresent<T>(value: T | null | undefined): value is T { return value !== null && value !== undefined; }
 ---
-{data?.profile ? (
+{data?.pageType === 'homepage' ? (
 	<main class="page-shell overview-page">
-		<section class="overview-statement" aria-labelledby="statement-heading">
-			<h2 id="statement-heading">Research statement</h2>
-			<p data-tina-field={tinaField(data, 'researchSummary')}>{data.researchSummary}</p>
-			<div class="overview-links"><a href="/research">Full research statement</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a></div>
+		<section class="overview-statement">
+			<h1>About Peng Liu</h1>
+			<p class="home-summary" data-tina-field={tinaField(data, 'researchSummary')}>{data.researchSummary}</p>
+			<div class="overview-links"><a href="/statement.pdf">Research statement (PDF)</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a></div>
 		</section>
-		<section class="overview-papers" aria-labelledby="papers-heading">
-			<div class="overview-section-heading"><h2 id="papers-heading">Selected papers</h2><a href="/publications">All publications</a></div>
-			<ul>{publications.map((publication) => <li><a href={`/publications/${publication._sys.filename}`}>{publication.title}</a><span>{publication.journal} · {publication.year}</span></li>)}</ul>
-		</section>
-		<section class="overview-courses" aria-labelledby="courses-heading">
-			<h2 id="courses-heading">Selected courses</h2>
-			<ul><li><a href="https://classes.cornell.edu/browse/roster/SP26/class/HADM/6200">Principles of Real Estate · HADM 6200</a></li><li>MBA Real Estate Finance</li><li>MFE: Asset-backed Securities, Credit Risk, Stochastic Calculus</li></ul>
-		</section>
-		<section class="overview-students" aria-labelledby="student-policy-heading">
-			<h2 id="student-policy-heading">Student inquiries</h2>
-			<p>Research assistant openings depend on current projects. Email your interests, relevant experience, and CV. Graduate admission is through Cornell’s programs.</p>
-			<a href="/students">Prospective student details</a>
-		</section>
-		{data.updates?.length ? <section class="overview-updates" aria-labelledby="updates-heading">
-			<h2 id="updates-heading">Updates</h2>
-			<ul>{data.updates.filter(isPresent).map((update) => <li><time data-tina-field={tinaField(update, 'date')}>{update.date}</time><span data-tina-field={tinaField(update, 'text')}>{update.text}</span></li>)}</ul>
-		</section> : null}
+		<section class="overview-papers"><div class="overview-section-heading"><h2>Selected papers</h2><a href="/publications">All publications</a></div><ul>{featuredPublications.map((publication) => <li><a href={`/publications/${publication._sys.filename}`}>{publication.title}</a><span>{publication.journal} · {publication.year}</span></li>)}</ul></section>
+		<section class="overview-courses"><h2>Selected courses</h2><ul><li><a href="https://classes.cornell.edu/browse/roster/SP26/class/HADM/6200">Principles of Real Estate · HADM 6200</a></li><li>MBA Real Estate Finance</li><li>MFE: Asset-backed Securities, Credit Risk, Stochastic Calculus</li></ul></section>
+		<section class="overview-students"><h2>Student inquiries</h2><p>Research assistant openings depend on current projects. Email your interests, relevant experience, and CV. Graduate admission is through Cornell’s programs. <a href="/students">Prospective student details</a></p></section>
+		<section class="overview-updates" aria-labelledby="updates-heading"><h2 id="updates-heading">Updates</h2><ul><li><time>Conference travel</time><span>Upcoming dates pending confirmation.</span></li><li><time>2025</time><span>“The Influence of Hotel Characteristics on Debt Servicing and Default in the U.S. Lodging Sector” appeared in <em>Cornell Hospitality Quarterly</em>, 66(2), 137–155.</span></li><li><time>2025</time><span>“Founder CEOs and REIT Capital Structure” was published online ahead of issue in the <em>Journal of Real Estate Research</em>.</span></li><li><time>2024</time><span>“Investor Networks and Fund Performance in Private Equity Real Estate Funds” was published online ahead of issue in the <em>Journal of Real Estate Finance and Economics</em>.</span></li></ul></section>
 	</main>
 ) : data?.pageType === 'cv' ? (
 	<main class="page-shell info-page cv-page">
@@ -46,25 +31,18 @@ function isPresent<T>(value: T | null | undefined): value is T { return value !=
 		<section class="cv-materials" aria-label="CV and professional profile"><article class="cv-document"><div><p class="row-label">Curriculum vitae</p><h2>Peng Liu — CV</h2><p data-tina-field={tinaField(data, 'cvUpdated')}>{data.cvUpdated} · PDF</p></div><a class="document-link" href={data.cvPdf} target="_blank" rel="noopener">Open or download CV</a></article><article class="cv-document statement-document"><div><p class="row-label">Professional profile</p><h2 data-tina-field={tinaField(data, 'statementTitle')}>{data.statementTitle}</h2><p data-tina-field={tinaField(data, 'statementText')}>{data.statementText}</p></div>{data.statementUrl && <a href={data.statementUrl}>Cornell profile</a>}</article></section>
 	</main>
 ) : data?._sys.filename === 'people' ? (
-	<main class="page-shell info-page"><p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p><div class="info-list">{people.map((person, index) => <article class="info-row"><span class="row-number">{String(index + 1).padStart(2, '0')}</span><div><p class="row-label">{person.role}</p><h2>{person.name}</h2>{person.researchArea && <p>{person.researchArea}</p>}</div><a href={`/people/${person._sys.filename}`}>Profile</a></article>)}</div></main>
+	<main class="page-shell info-page compact-page"><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><div class="people-grid">{people.map((person) => <article class="person-card"><a class="person-photo" href={`/people/${person._sys.filename}`} aria-label={`View ${person.name} profile`}>{person.photo && <img src={person.photo} alt={person.name} />}</a><div><p class="compact-meta">{person.role}</p><h2><a href={`/people/${person._sys.filename}`}>{person.name}</a></h2>{person.researchArea && <p class="compact-detail">{person.researchArea}</p>}</div></article>)}</div></main>
 ) : data?._sys.filename === 'publications' ? (
-	<main class="page-shell info-page publications-page"><p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{showWorking ? 'Working papers' : data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p><div class="publication-filters"><a href="/publications">All scholarly work</a><a href="/publications?type=working">Working papers</a></div><ol class="publication-citations">{allPublications.map((publication) => <li><span class="publication-citation" data-tina-field={publication.citation ? tinaField(publication, 'citation') : undefined}>{publication.citation || `${publication.authors}. ${publication.title}.`}</span><span class="publication-actions"><button type="button" class="copy-citation" aria-label="Copy citation">Copy cite</button><a href={`/publications/${publication._sys.filename}`}>Details</a>{publication.doi && <a href={`https://doi.org/${publication.doi}`}>DOI</a>}{publication.paperUrl && <a href={publication.paperUrl}>Paper</a>}{publication.pdfUrl && <a href={publication.pdfUrl}>PDF</a>}<a href={publication.authorOrcid || orcidLookup}>ORCID</a></span></li>)}</ol><script is:inline>{`document.addEventListener('click', async (event) => { const button = event.target.closest('.copy-citation'); if (!button) return; const citation = button.closest('li').querySelector('.publication-citation').textContent.trim(); try { await navigator.clipboard.writeText(citation); button.textContent = 'Copied'; setTimeout(() => button.textContent = 'Copy cite', 1400); } catch { button.textContent = 'Copy failed'; setTimeout(() => button.textContent = 'Copy cite', 1400); } });`}</script></main>
+	<main class="page-shell info-page publications-page"><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><PublicationArchive publications={publicationRecords} lang="en" /></main>
 
+) : data?._sys.filename === 'students' ? (
+	<main class="page-shell info-page compact-page"><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="single-paragraph" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p></main>
+) : data?._sys.filename === 'teaching' ? (
+	<main class="page-shell info-page compact-page"><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><div class="compact-record-list">{(data.items ?? []).filter(isPresent).map((item) => <article class="compact-record"><span class="compact-year">{item.label}</span><div><h2>{item.link ? <a href={item.link}>{item.title}</a> : item.title}</h2><p class="compact-detail">{item.detail}</p></div></article>)}</div></main>
 ) : data?._sys.filename === 'about' ? (
-	<main class="page-shell info-page about-page">
-		<p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p>
-		<h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
-		<p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p>
-		{data.updates?.length ? <section class="about-updates" aria-labelledby="about-updates-heading">
-			<h2 id="about-updates-heading">Updates</h2>
-			<ul>{data.updates.filter(isPresent).map((update) => <li><time data-tina-field={tinaField(update, 'date')}>{update.date}</time><span data-tina-field={tinaField(update, 'text')}>{update.text}</span></li>)}</ul>
-		</section> : null}
-		<section class="about-items" aria-label="About Peng Liu">
-			{(data.items ?? []).filter(isPresent).map((item, index) => <article class="about-item">
-				<p class="row-label" data-tina-field={tinaField(item, 'label')}>{item.label}</p><h2 data-tina-field={tinaField(item, 'title')}>{item.title}</h2><p data-tina-field={tinaField(item, 'detail')}>{item.detail}</p>
-				{item.link && <a href={item.link} data-tina-field={tinaField(item, 'link')}>{item.linkText || 'Details'}</a>}
-			</article>)}
-		</section>
+	<main class="page-shell info-page about-page"><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="about-prose" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p>
+		{data.items?.filter(isPresent).map((item) => <p class="about-prose"><strong>{item.title}.</strong> {item.detail} {item.link && <a href={item.link}>{item.linkText || 'Details'}</a>}</p>)}
+		{data.updates?.length ? <section class="overview-updates" aria-labelledby="about-updates-heading"><h2 id="about-updates-heading">Recent news</h2><ul>{data.updates.filter(isPresent).map((update) => <li><time>{update.date}</time><span>{update.text}</span></li>)}</ul></section> : null}
 	</main>
 ) : data?.pageType === 'listing' ? (
 	<main class="page-shell info-page"><p class="eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p><h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1><p class="lead page-lead" data-tina-field={tinaField(data, 'intro')}>{data.intro}</p><div class="info-list">{(data.items ?? []).filter(isPresent).map((item, index) => <article class="info-row"><span class="row-number">{String(index + 1).padStart(2, '0')}</span><div><p class="row-label" data-tina-field={tinaField(item, 'label')}>{item.label}</p><h2 data-tina-field={tinaField(item, 'title')}>{item.title}</h2><p data-tina-field={tinaField(item, 'detail')}>{item.detail}</p></div>{item.link && <a href={item.link} data-tina-field={tinaField(item, 'link')}>{item.linkText || 'Details'}</a>}</article>)}</div></main>

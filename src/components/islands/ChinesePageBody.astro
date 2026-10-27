@@ -1,10 +1,13 @@
 ---
 import type { CmsPage } from '../../lib/data';
 import { listPeople, listPublications } from '../../lib/data';
+import PublicationArchive from '../PublicationArchive.astro';
 interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
 const people = data?._sys.filename === 'people' ? await listPeople() : [];
-const publications = data?._sys.filename === 'publications' ? await listPublications() : [];
+const publications = ['home', 'publications'].includes(data?._sys.filename ?? '') ? await listPublications() : [];
+const featuredSlugs = ['cmbs-pricing-liquidity-risk', 'residential-brokerage-contract-design', 'commodity-futures-returns'];
+const featuredPublications = publications.filter((publication) => featuredSlugs.includes(publication._sys.filename));
 const slug = data?._sys.filename ?? '';
 const copy: Record<string, { eyebrow: string; title: string; intro: string; items?: { label: string; title: string; detail: string; link?: string; linkText?: string }[] }> = {
  about: { eyebrow: '研究与个人经历', title: '关于 Peng Liu', intro: '我的研究关注金融市场如何影响实体经济中的决策，尤其研究实体资产的估值、融资与资本配置。', items: [
@@ -14,24 +17,13 @@ const copy: Record<string, { eyebrow: string; title: string; intro: string; item
   { label: '学术服务', title: '房地产与酒店业研究', detail: '我担任 Journal of Real Estate Portfolio Management 主编，并参与房地产、金融和酒店业相关期刊及研究组织的学术服务。' },
   { label: '学生咨询', title: '研究机会与申请', detail: '研究助理机会取决于当前项目。欢迎通过电子邮件介绍您的研究兴趣、相关经历并附上简历。研究生申请由康奈尔大学相关项目负责。', link: '/zh/students', linkText: '学生信息' },
  ] },
- research: { eyebrow: '研究兴趣', title: '研究方向', intro: '我的研究考察金融市场与实体经济的互动，重点关注商业房地产、酒店业、证券化及大宗商品市场中实体资产的估值、融资和表现。', items: [
-  { label: '房地产金融', title: '房地产金融、REITs 与私募股权', detail: '我研究 REITs 的经营重点与资本结构、私募房地产基金的表现与投资者网络、主权财富基金收购、实体资产融资以及住宅经纪合同。这些研究将房地产企业和基金的组织形式与投资选择、融资成本及市场结果联系起来。', link: '/zh/publications', linkText: '相关论文' },
-  { label: '酒店业市场', title: '酒店、品牌与住宿业投资', detail: '酒店业研究涉及酒店品牌价值、酒店资产市场、住宿业债务偿付与违约、入住率与宾客体验，以及酒店公共空间如何构建体验资本。', link: '/zh/publications', linkText: '相关论文' },
-  { label: '证券化与大宗商品', title: '证券化债务与实体资产估值', detail: '相关研究考察房地产流动性风险如何影响商业抵押贷款支持证券定价、经济联系与相对稀缺性如何影响商品期货收益，以及金融市场风险和波动率的评估方法。', link: '/zh/publications', linkText: '相关论文' },
-  { label: '研究方法', title: '应用计量经济学', detail: '我运用实证金融与房地产研究方法分析定价、合同、投资、风险和市场行为。各篇论文介绍了具体数据与方法。', link: '/zh/publications', linkText: '学术成果' },
- ] },
- students: { eyebrow: '欢迎加入', title: '学生信息', intro: '研究助理机会取决于项目需求。研究生申请请通过康奈尔大学相关项目提交。', items: [
-  { label: '研究生学习', title: '博士与硕士申请', detail: '各项目的申请要求和截止日期有所不同，录取由康奈尔大学研究生项目负责。', link: 'https://gradschool.cornell.edu/admissions/', linkText: '康奈尔大学研究生项目' },
-  { label: '本科生研究', title: '研究助理机会', detail: '职位取决于当前研究项目。请通过电子邮件简要介绍自己、研究兴趣、相关课程或经历，并附上简历。', link: 'mailto:pl333@cornell.edu', linkText: '联系 Peng Liu' },
- ] },
- teaching: { eyebrow: '课程与指导', title: '教学', intro: '在康奈尔大学讲授房地产金融与投资课程，包括研究生课程及康奈尔大学–北京大学双学位项目。', items: [
-  { label: '研究生 · 2026年春季', title: 'HADM 6200 — Principles of Real Estate', detail: '房地产金融与投资、不确定性下的估值以及抵押贷款融资。', link: 'mailto:pl333@cornell.edu', linkText: '联系' },
-  { label: 'MMH/MBA', title: '康奈尔大学–北京大学双学位项目', detail: '担任该双学位项目学术主任。课程安排因学年而异。', link: 'https://business.cornell.edu/', linkText: '康奈尔大学项目' },
-  { label: '学生指导', title: '学生社团与本科生研究', detail: '我指导康奈尔大学房地产学生社团 CREC 和 CREDIT，并担任 Rawlings Cornell Presidential Research Scholars 项目导师。', link: 'mailto:pl333@cornell.edu', linkText: '电子邮件' },
+ students: { eyebrow: '', title: '学生咨询', intro: '研究助理名额视项目需求而定。如需咨询，请通过电子邮件联系 Peng Liu，并附上研究兴趣、相关经历和简历。研究生申请请直接联系康奈尔大学相关项目。' },
+ teaching: { eyebrow: '', title: '教学', intro: '', items: [
+  { label: '2026年春季', title: 'Principles of Real Estate · HADM 6200', detail: '研究生课程', link: 'https://classes.cornell.edu/browse/roster/SP26/class/HADM/6200', linkText: '课程表' },
  ] },
  cv: { eyebrow: '个人经历、荣誉与学术服务', title: '简历与学术服务', intro: '包括教育背景、学术任职、研究领导工作、期刊编辑服务及部分荣誉。康奈尔大学个人简历于 2025 年 12 月更新，涵盖完整的论文与职业经历。', items: [
-  { label: '2023年至今', title: '房地产与金融学教授', detail: '康奈尔大学约翰逊商学院；应用经济与政策及金融学。' },
-  { label: '2022年至今', title: 'Paul Rubacha 房地产系创系教师', detail: '该系于 2023 年成立。' },
+  { label: '2023年至今', title: '房地产与金融学正教授', detail: '康奈尔大学约翰逊商学院；应用经济与政策及金融学。' },
+  { label: '2023年至今', title: 'Paul Rubacha 房地产系创系教师', detail: '康奈尔大学。' },
   { label: '2013–2023', title: '房地产与金融学副教授（终身教职）', detail: '康奈尔大学。' },
   { label: '2007–2013', title: '房地产学助理教授', detail: '康奈尔大学诺兰酒店管理学院。' },
   { label: '2002–2007', title: '研究员', detail: '加州大学伯克利分校 Fisher Center for Real Estate and Urban Economics。' },
@@ -64,19 +56,25 @@ const copy: Record<string, { eyebrow: string; title: string; intro: string; item
 const page = copy[slug];
 const home = slug === 'home';
 ---
-{data && (home ? <main class="page-shell info-page zh-home">
- <p class="eyebrow">康奈尔大学约翰逊商学院</p><h1>Peng (Peter) Liu</h1><p class="lead page-lead">房地产与金融学教授</p>
- <p class="zh-lead">我的研究关注金融市场与实体经济的互动，尤其研究实体资产的估值与融资，包括商业房地产、REITs、证券化债务、大宗商品和酒店业市场。</p>
- <section class="zh-section"><h2>个人简介</h2><p>Peng (Peter) Liu 是康奈尔大学约翰逊商学院及诺兰酒店管理学院房地产与金融学教授。他于 2007 年加入康奈尔大学，并于 2022 年成为 Paul Rubacha 房地产系创系教师。加入学术界之前，他曾在纽约的 Goldman Sachs Asset Management 和北京的 Deloitte Consulting 工作。他在加州大学伯克利分校获得房地产与金融学博士学位及金融学硕士学位，在北京大学获得金融经济学硕士学位，并在清华大学获得工学学士学位。</p><p class="zh-inline-links"><a href="/zh/research">研究方向</a><a href="/zh/cv">学术经历</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">个人简历（英文）</a></p></section>
- <section class="zh-section"><h2>精选论文</h2><ul class="zh-paper-list">{(await listPublications()).filter((p) => ['residential-brokerage-contract-design','cmbs-pricing-liquidity-risk','commodity-futures-returns'].includes(p._sys.filename)).map((p) => <li><a href={`/zh/publications/${p._sys.filename}`}>{p.citation || p.title}</a></li>)}</ul><a href="/zh/publications">查看全部学术成果</a></section>
- <section class="zh-section"><h2>课程</h2><ul class="zh-course-list"><li><a href="https://classes.cornell.edu/browse/roster/SP26/class/HADM/6200">Principles of Real Estate · HADM 6200</a></li><li>MBA Real Estate Finance</li><li>MFE：Asset-backed Securities、Credit Risk、Stochastic Calculus</li></ul></section>
- <section class="zh-section"><h2>学生咨询</h2><p>研究助理职位取决于当前项目。请通过电子邮件介绍您的研究兴趣、相关经历并附上简历。研究生申请请通过康奈尔大学相关项目提交。</p><a href="/zh/students">学生信息</a></section>
- <section class="zh-section"><h2>近期动态</h2><ul class="zh-update-list"><li><time>会议行程</time><span>待确认。</span></li><li><time>2025</time><span>论文 “The Influence of Hotel Characteristics on Debt Servicing and Default in the U.S. Lodging Sector” 发表于 Cornell Hospitality Quarterly, 66(2), 137–155。</span></li><li><time>2025</time><span>论文 “Founder CEOs and REIT Capital Structure” 已在 Journal of Real Estate Research 在线发表。</span></li><li><time>2024</time><span>论文 “Investor Networks and Fund Performance in Private Equity Real Estate Funds” 已在 Journal of Real Estate Finance and Economics 在线发表。</span></li></ul></section>
-</main> : page ? <main class="page-shell info-page zh-page">
- <p class="eyebrow">{page.eyebrow}</p><h1>{page.title}</h1><p class="lead page-lead">{page.intro}</p>
- {slug === 'publications' ? <div class="publication-filters"><a href="/zh/publications">全部学术成果</a><a href="/zh/publications?type=working">工作论文</a></div> : null}
- {page.items ? <div class="info-list">{page.items.map((item, i) => <article class="info-row"><span class="row-number">{String(i + 1).padStart(2,'0')}</span><div><p class="row-label">{item.label}</p><h2>{item.title}</h2><p>{item.detail}</p></div>{item.link && <a href={item.link}>{item.linkText}</a>}</article>)}</div> : null}
-{slug === 'publications' ? <><ol class="publication-citations">{publications.filter((p) => Astro.url.searchParams.get('type') !== 'working' || p.category === 'Working paper').map((p) => <li><span class="publication-citation">{p.citation || `${p.authors}. ${p.title}.`}</span><span class="publication-actions"><button type="button" class="copy-citation">复制引文</button><a href={`/zh/publications/${p._sys.filename}`}>摘要与详情</a>{p.doi && <a href={`https://doi.org/${p.doi}`}>DOI</a>}<a href={p.authorOrcid || 'https://orcid.org/orcid-search/search?searchQuery=Peng%20Liu%20Cornell'}>ORCID</a></span></li>)}</ol><script is:inline>{`document.addEventListener('click', async (event) => { const button = event.target.closest('.copy-citation'); if (!button) return; const citation = button.closest('li').querySelector('.publication-citation').textContent.trim(); try { await navigator.clipboard.writeText(citation); button.textContent = '已复制'; setTimeout(() => button.textContent = '复制引文', 1400); } catch { button.textContent = '复制失败'; setTimeout(() => button.textContent = '复制引文', 1400); } });`}</script></> : null}
- {slug === 'people' ? <div class="info-list">{people.map((p,i) => <article class="info-row"><span class="row-number">{String(i+1).padStart(2,'0')}</span><div><p class="row-label">{p.role === 'Professor of Real Estate and Finance' ? '房地产与金融学教授' : p.role}</p><h2>{p.name}</h2><p>{p.researchArea}</p></div><a href={`/zh/people/${p._sys.filename}`}>个人介绍</a></article>)}</div> : null}
+{data && (home ? <main class="page-shell overview-page zh-home">
+ <h1>关于 Peng Liu</h1>
+ <p class="home-summary">我的研究关注金融市场如何为实体资产定价与融资，涵盖房地产、酒店业、REITs、证券化债务和大宗商品。</p>
+ <div class="overview-links"><a href="/statement.pdf">研究陈述（PDF）</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">个人简历</a></div>
+ <section class="overview-papers"><div class="overview-section-heading"><h2>精选论文</h2><a href="/zh/publications">全部学术成果</a></div><ul>{featuredPublications.map((publication) => <li><a href={`/zh/publications/${publication._sys.filename}`}>{publication.title}</a><span>{publication.journal} · {publication.year}</span></li>)}</ul></section>
+ <section class="overview-courses"><h2>精选课程</h2><ul><li><a href="https://classes.cornell.edu/browse/roster/SP26/class/HADM/6200">Principles of Real Estate · HADM 6200</a></li><li>MBA Real Estate Finance</li><li>MFE：Asset-backed Securities、Credit Risk、Stochastic Calculus</li></ul></section>
+ <section class="overview-students"><h2>学生咨询</h2><p>研究助理名额视当前项目而定。咨询时请通过电子邮件介绍研究兴趣、相关经历并附上简历。研究生申请请联系康奈尔大学相关项目。<a href="/zh/students">学生信息</a></p></section>
+ <section class="overview-updates" aria-labelledby="updates-heading"><h2 id="updates-heading">近期动态</h2><ul><li><time>会议行程</time><span>具体日期待确认。</span></li><li><time>2025</time><span>论文 “The Influence of Hotel Characteristics on Debt Servicing and Default in the U.S. Lodging Sector” 发表于 <em>Cornell Hospitality Quarterly</em>, 66(2), 137–155。</span></li><li><time>2025</time><span>论文 “Founder CEOs and REIT Capital Structure” 已在线发表，等待编入期刊期次。</span></li><li><time>2024</time><span>论文 “Investor Networks and Fund Performance in Private Equity Real Estate Funds” 已在线发表，等待编入期刊期次。</span></li></ul></section>
+</main> : page ? <main class="page-shell info-page zh-page compact-page">
+ <h1>{page.title}</h1>
+ {slug === 'about' ? <>
+  {(page.items ?? []).map((item) => (
+   <p class="about-prose"><strong>{item.title}。</strong>{item.detail} {item.link && <a href={item.link}>{item.linkText || '详情'}</a>}</p>
+  ))}
+  <section class="overview-updates"><h2>近期动态</h2><ul><li><time>2025</time><span>论文 “The Influence of Hotel Characteristics on Debt Servicing and Default in the U.S. Lodging Sector” 发表于 <em>Cornell Hospitality Quarterly</em>, 66(2), 137–155。</span></li><li><time>2025</time><span>论文 “Founder CEOs and REIT Capital Structure” 发表于 <em>Journal of Real Estate Research</em>。</span></li><li><time>2024</time><span>论文 “Investor Networks and Fund Performance in Private Equity Real Estate Funds” 发表于 <em>Journal of Real Estate Finance and Economics</em>。</span></li></ul></section>
+ </> : null}
+ {slug === 'publications' ? <PublicationArchive publications={publications} lang="zh" /> : null}
+ {slug === 'students' ? <p class="single-paragraph">{page.intro}</p> : null}
+ {slug === 'teaching' ? <div class="compact-record-list">{(page.items ?? []).map((item) => <article class="compact-record"><span class="compact-year">{item.label}</span><div><h2><a href={item.link}>{item.title}</a></h2><p class="compact-detail">{item.detail}</p></div></article>)}</div> : null}
+ {slug === 'people' ? <div class="people-grid">{people.map((person) => <article class="person-card"><a class="person-photo" href={`/zh/people/${person._sys.filename}`} aria-label={`查看 ${person.name} 介绍`}>{person.photo && <img src={person.photo} alt={person.name} />}</a><div><p class="compact-meta">{person.role?.includes('Professor of Real Estate and Finance') ? '房地产与金融学教授' : person.role}</p><h2><a href={`/zh/people/${person._sys.filename}`}>{person.name}</a></h2>{person.researchArea && <p class="compact-detail">{person.researchArea}</p>}</div></article>)}</div> : null}
  {slug === 'cv' ? <p class="zh-inline-links"><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">打开英文完整简历（2025年12月更新）</a><a href="https://business.cornell.edu/profiles/pl333/">康奈尔英文个人主页</a></p> : null}
 </main> : null)}

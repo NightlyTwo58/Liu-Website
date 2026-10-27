@@ -1,0 +1,32 @@
+---
+import type { CmsPublication } from '../lib/data';
+
+interface Props {
+	publications: CmsPublication[];
+	lang?: 'en' | 'zh';
+}
+
+const { publications, lang = 'en' } = Astro.props;
+const isZh = lang === 'zh';
+const years = [...new Set(publications.map((publication) => publication.year ?? 0))]
+	.sort((a, b) => b - a);
+const yearNavigationLabel = isZh ? '按年份浏览论文' : 'Browse publications by year';
+const otherYearLabel = isZh ? '其他' : 'Other';
+const languagePrefix = isZh ? '/zh' : '';
+---
+<div class="archive-layout">
+	<nav class="archive-years" aria-label={yearNavigationLabel}>
+		{years.map((year) => <a href={'#year-' + year}>{year || otherYearLabel}</a>)}
+	</nav>
+	<div class="archive-content">
+		{years.map((year) => <section class="archive-year-group" id={'year-' + year} aria-labelledby={'heading-' + year}>
+			<h2 id={'heading-' + year}>{year || otherYearLabel}</h2>
+			<ol class="archive-list">
+				{publications.filter((publication) => (publication.year ?? 0) === year).map((publication) => <li class="archive-item">
+					<h3><a href={languagePrefix + '/publications/' + publication._sys.filename}>{publication.title}</a></h3>
+					<p class="archive-meta">{[publication.authors, publication.journal, publication.status].filter(Boolean).join(' · ')}</p>
+				</li>)}
+			</ol>
+		</section>)}
+	</div>
+</div>

@@ -6,8 +6,6 @@ interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
 const people = data?._sys.filename === 'people' ? await listPeople() : [];
 const publications = ['home', 'publications'].includes(data?._sys.filename ?? '') ? await listPublications() : [];
-const featuredSlugs = ['cmbs-pricing-liquidity-risk', 'residential-brokerage-contract-design', 'commodity-futures-returns'];
-const featuredPublications = publications.filter((publication) => featuredSlugs.includes(publication._sys.filename));
 const slug = data?._sys.filename ?? '';
 const copy: Record<string, { eyebrow: string; title: string; intro: string; items?: { label: string; title: string; detail: string; link?: string; linkText?: string }[] }> = {
  about: { eyebrow: '研究与个人经历', title: '关于 Peng Liu', intro: '我的研究关注金融市场如何影响实体经济中的决策，尤其研究实体资产的估值、融资与资本配置。', items: [
@@ -56,15 +54,15 @@ const copy: Record<string, { eyebrow: string; title: string; intro: string; item
 const page = copy[slug];
 const home = slug === 'home';
 ---
-{data && (home ? <main class="page-shell overview-page zh-home">
- <h1>关于 Peng Liu</h1>
- <p class="home-summary">我的研究关注金融市场如何为实体资产定价与融资，涵盖房地产、酒店业、REITs、证券化债务和大宗商品。</p>
- <div class="overview-links"><a href="/statement.pdf">研究陈述（PDF）</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">个人简历</a></div>
- <section class="overview-papers"><div class="overview-section-heading"><h2>精选论文</h2><a href="/zh/publications">全部学术成果</a></div><ul>{featuredPublications.map((publication) => <li><a href={`/zh/publications/${publication._sys.filename}`}>{publication.title}</a><span>{publication.journal} · {publication.year}</span></li>)}</ul></section>
- <section class="overview-courses"><h2>精选课程</h2><ul><li><a href="https://classes.cornell.edu/browse/roster/SP26/class/HADM/6200">Principles of Real Estate · HADM 6200</a></li><li>MBA Real Estate Finance</li><li>MFE：Asset-backed Securities、Credit Risk、Stochastic Calculus</li></ul></section>
- <section class="overview-students"><h2>学生咨询</h2><p>研究助理名额视当前项目而定。咨询时请通过电子邮件介绍研究兴趣、相关经历并附上简历。研究生申请请联系康奈尔大学相关项目。<a href="/zh/students">学生信息</a></p></section>
- <section class="overview-updates" aria-labelledby="updates-heading"><h2 id="updates-heading">近期动态</h2><ul><li><time>会议行程</time><span>具体日期待确认。</span></li><li><time>2025</time><span>论文 “The Influence of Hotel Characteristics on Debt Servicing and Default in the U.S. Lodging Sector” 发表于 <em>Cornell Hospitality Quarterly</em>, 66(2), 137–155。</span></li><li><time>2025</time><span>论文 “Founder CEOs and REIT Capital Structure” 已在线发表，等待编入期刊期次。</span></li><li><time>2024</time><span>论文 “Investor Networks and Fund Performance in Private Equity Real Estate Funds” 已在线发表，等待编入期刊期次。</span></li></ul></section>
-</main> : page ? <main class="page-shell info-page zh-page compact-page">
+{data && (home ? <div class="liu-home zh-home">
+ <header class="liu-home__topbar"><div class="liu-home__wrap"><a class="liu-home__wordmark" href="/zh">Peng (Peter) Liu</a><nav aria-label="主导航"><a href="#about">关于</a><a href="#research">研究</a><a href="#teaching">教学</a><a href="#contact">联系</a><a href="/zh/publications">学术成果</a><a href="/">English</a></nav></div></header>
+ <main>
+  <section class="liu-home__hero" id="top"><div class="liu-home__wrap"><img class="liu-home__portrait" src="/peter.jpg" alt="Peng (Peter) Liu" /><div><h1>Peng (Peter) Liu</h1><p class="liu-home__role">房地产与金融学正教授</p><p class="liu-home__unit">新加坡旅游局亚洲酒店管理杰出教授<br />诺兰酒店管理学院 · 康奈尔大学约翰逊商学院</p><div class="liu-home__actions"><a class="liu-home__button liu-home__button--primary" href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">个人简历</a><a class="liu-home__button" href="mailto:pl333@cornell.edu">pl333@cornell.edu</a><a class="liu-home__button" href="https://business.cornell.edu/profiles/pl333/">康奈尔个人主页</a></div></div></div></section>
+  <section class="liu-home__section" id="about"><div class="liu-home__wrap liu-home__intro"><div><h2>关于</h2><p>Peng (Peter) Liu 是康奈尔大学诺兰酒店管理学院房地产与金融学教授，也是 Rubacha 房地产系创系教师。他的研究关注金融市场如何影响实体经济决策，尤其关注实体资产的估值、融资与资本配置。</p><p>他负责康奈尔大学与北京大学 MMH/MBA 双学位项目，并担任康奈尔房地产与金融中心研究主任。</p><ul class="liu-home__interests"><li>房地产金融</li><li>REITs</li><li>酒店资产市场</li><li>CMBS 与证券化</li><li>大宗商品</li><li>应用计量经济学</li></ul></div><aside class="liu-home__news"><h3>近期动态</h3><ol><li><time>2026 春</time><span>教授 HADM 6200《房地产原理》。</span></li><li><time>2025 年 7 月</time><span>出任房地产与金融中心研究主任。</span></li><li><time>2025 年</time><span>《酒店财务管理与情境化决策》第二版出版。</span></li></ol></aside></div></section>
+  <section class="liu-home__section" id="research"><div class="liu-home__wrap"><div class="liu-home__section-head"><div><h2>精选研究</h2><p>关于实体资产估值、融资与经营的近期研究。</p></div><a href="/zh/publications">查看全部学术成果</a></div><div class="liu-home__research-grid">{publications.slice(0, 6).map((publication) => <article><p class="liu-home__publication-meta">{publication.year} · {publication.journal || publication.category}</p><h3><a href={`/zh/publications/${publication._sys.filename}`}>{publication.title}</a></h3><p>{publication.authors}</p></article>)}</div></div></section>
+  <section class="liu-home__section" id="teaching"><div class="liu-home__wrap"><div class="liu-home__section-head"><div><h2>教学</h2><p>房地产、金融与酒店业交叉领域的课程和项目。</p></div><a href="/zh/teaching">全部课程</a></div><div class="liu-home__course-grid"><article><span>HADM 6200</span><h3>房地产原理</h3><p>房地产市场、投资与金融导论。</p></article><article><span>MBA</span><h3>房地产金融</h3><p>实体资产的资本市场与金融决策。</p></article><article><span>MMH/MBA</span><h3>康奈尔—北京大学双学位</h3><p>参与联合酒店管理与商学项目的学术工作。</p></article></div></div></section>
+ </main><footer class="liu-home__contact" id="contact"><div class="liu-home__wrap"><div><dt>办公室</dt><dd>448 Statler Hall<br />Ithaca, NY 14853-6201</dd></div><div><dt>电子邮件</dt><dd><a href="mailto:pl333@cornell.edu">pl333@cornell.edu</a></dd></div><div><dt>电话</dt><dd>607.254.2960</dd></div><div><dt>学术主页</dt><dd><a href="https://scholar.google.com/citations?user=v1zHGQEAAAAJ&hl=en">Google Scholar</a><br /><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a></dd></div></div><p class="liu-home__copyright liu-home__wrap">© {new Date().getFullYear()} Peng (Peter) Liu · 康奈尔大学</p></footer>
+</div> : page ? <main class="page-shell info-page zh-page compact-page">
  <h1>{page.title}</h1>
  {slug === 'about' ? <>
   {(page.items ?? []).map((item) => (

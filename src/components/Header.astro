@@ -12,13 +12,4 @@ const links = [
 	{ label: isZh ? '荣誉与学术服务' : 'Honors & service', href: isZh ? '/zh/cv' : '/cv' },
 ];
 ---
-<nav class="top-nav" aria-label={isZh ? '主导航' : 'Main navigation'}><div class="top-nav-inner"><a class="language-toggle" href={isZh ? enPath : zhPath} lang={isZh ? 'en' : 'zh'}>{isZh ? 'English' : '中文'}</a>{links.map((link) => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}</div></nav>
-<aside class="side">
-	<div class="side-inner">
-		<a class="portrait" href={isZh ? '/zh' : '/'} aria-label={isZh ? 'Peng Liu 首页' : 'Peng Liu home'}><img src="/peter.jpg" alt="" /></a>
-		<div class="side-identity"><h1 class="name">Peng (Peter) Liu</h1><p class="side-role">{isZh ? '房地产与金融学正教授' : 'Full Professor of Real Estate and Finance'}</p></div>
-		<p class="side-title">{isZh ? <>新加坡旅游局亚洲酒店管理杰出教授<br />诺兰酒店管理学院（Nolan School of Hotel Administration）<br />康奈尔大学约翰逊商学院（Cornell SC Johnson College of Business）</> : <>Singapore Tourism Board Distinguished Professor in Asian Hospitality Management<br />Nolan School of Hotel Administration<br />Cornell SC Johnson College of Business</>}</p>
-		<dl class="contact"><div><dt>{isZh ? '电话' : 'Phone'}</dt><dd>607.254.2960</dd></div><div><dt>{isZh ? '办公室' : 'Office'}</dt><dd>448 Statler Hall<br />Ithaca, NY 14853-6201</dd></div></dl>
-		<nav class="side-links" aria-label={isZh ? '个人资料与联系方式' : 'Profile and contact links'}><a href="mailto:pl333@cornell.edu">{isZh ? '电子邮件' : 'Email'}</a><a href="https://business.cornell.edu/profiles/pl333/">{isZh ? '康奈尔大学个人主页' : 'Cornell profile'}</a><a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a><a href="https://scholar.google.com/citations?user=v1zHGQEAAAAJ&hl=en">Google Scholar</a><a href="https://orcid.org/orcid-search/search?searchQuery=Peng%20Liu%20Cornell">ORCID</a></nav>
-	</div>
-</aside>
+<header class="liu-home__topbar"><div class="liu-home__wrap"><a class="liu-home__wordmark" href={isZh ? '/zh' : '/'}>Peng (Peter) Liu</a><nav aria-label={isZh ? '主导航' : 'Main navigation'}><a class="liu-home__language" href={isZh ? enPath : zhPath} lang={isZh ? 'en' : 'zh'}>{isZh ? 'English' : '中文'}</a>{links.map((link) => <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}</nav></div></header>

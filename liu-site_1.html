@@ -1,0 +1,446 @@
+<!doctype html>
+<!--
+  Faculty website: HEADER BAND layout, carnelian palette
+  ---------------------------------------------------------------
+  One file, no build step. Edit the text directly and upload to any
+  static host (GitHub Pages, Cornell web hosting, Netlify).
+
+  Quick edits
+  - Photo: replace the <div class="portrait"> block with
+           <img class="portrait" src="photo.jpg" alt="Peng (Peter) Liu">
+  - Colors: change the tokens in :root (and the dark-mode block below it).
+  - News: newest item first; keep it to five or six lines.
+  - Publications are grouped by theme; move items between groups freely.
+  - Each publication <li> carries its full reference in data-* attributes;
+    the Cite and BibTeX buttons build the copied text from those.
+  Lines marked EDIT are placeholders to check before publishing.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peng (Peter) Liu | Real Estate and Finance, Cornell</title>
+<meta name="description" content="Peng (Peter) Liu, Professor of Real Estate and Finance, Nolan School of Hotel Administration, Cornell SC Johnson College of Business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  /* Layout: sticky top bar, warm identity band, then a two-column home (bio + news) and full-width sections. */
+  /* Palette: carnelian red on warm white, shared with the sidebar template. */
+  :root {
+    --bg: #fdfcfb;
+    --surface: #f4f1ee;
+    --ink: #1f1a17;
+    --muted: #6b625c;
+    --rule: #e3ddd7;
+    --band: #f4f1ee;
+    --band-ink: #1f1a17;
+    --band-muted: #6b625c;
+    --accent: #a3192c;
+    --accent-soft: #f6e3e5;
+    --on-accent: #ffffff;
+    --display: "Libre Baskerville", Georgia, "Times New Roman", serif;
+    --body: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161312;
+      --surface: #1e1a18;
+      --ink: #eee8e3;
+      --muted: #a79d95;
+      --rule: #342d29;
+      --band: #1e1a18;
+      --band-ink: #eee8e3;
+      --band-muted: #a79d95;
+      --accent: #e47a86;
+      --accent-soft: #3a2124;
+      --on-accent: #1a0d10;
+      color-scheme: dark;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar { position: sticky; top: 0; z-index: 5; background: var(--band); color: var(--band-ink); border-bottom: 1px solid var(--rule); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 56px; }
+  .wordmark { font: 700 16px/1 var(--display); color: var(--band-ink); text-decoration: none; white-space: nowrap; }
+  .topbar nav { display: flex; gap: 22px; overflow-x: auto; font: 600 15px/1 var(--body); scrollbar-width: none; }
+  .topbar nav a { color: var(--band-muted); text-decoration: none; padding: 18px 0; white-space: nowrap; }
+  .topbar nav a:hover { color: var(--accent); }
+
+  /* ---------- Identity band ---------- */
+  .hero { background: var(--band); color: var(--band-ink); border-bottom: 1px solid var(--rule); }
+  .hero .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 40px; align-items: center; padding-top: 56px; padding-bottom: 64px; }
+  .portrait {
+    width: 168px; aspect-ratio: 1; max-width: 100%; border-radius: 50%; object-fit: cover;
+    background: var(--accent-soft);
+    display: grid; place-items: center; font: 700 48px/1 var(--display); color: var(--accent);
+  }
+  .hero h1 { font: 700 clamp(32px, 5vw, 50px)/1.1 var(--display); margin: 0 0 14px; letter-spacing: -0.01em; text-wrap: balance; }
+  .hero .role { font-size: 20px; margin: 0 0 4px; }
+  .hero .unit { color: var(--band-muted); margin: 0 0 22px; font-size: 17px; }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; font: 600 15px/1 var(--body);
+    padding: 11px 16px; border-radius: 4px; text-decoration: none;
+    border: 1px solid var(--rule); background: var(--bg); color: var(--accent);
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .btn.primary:hover { color: var(--on-accent); filter: brightness(1.08); }
+
+  /* ---------- Sections ---------- */
+  section { padding-top: 64px; padding-bottom: 8px; scroll-margin-top: 56px; }
+  h2 { font: 700 28px/1.2 var(--display); margin: 0 0 8px; text-wrap: balance; }
+  .kicker { color: var(--muted); margin: 0 0 32px; max-width: 60ch; }
+  h3 { font: 700 13px/1.2 var(--body); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 0 0 16px; }
+  p { margin: 0 0 14px; }
+
+  .home { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 56px; }
+  .bio p { max-width: 64ch; }
+  .interests { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 20px 0 0; }
+  .interests li { font-size: 15px; background: var(--surface); border: 1px solid var(--rule); padding: 6px 12px; border-radius: 999px; }
+
+  .news { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 24px 24px 12px; align-self: start; }
+  .news ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .news li { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; font-size: 16px; line-height: 1.45; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+  .news li:last-child { border-bottom: 0; }
+  .news time { font-weight: 600; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; line-height: 1.6; }
+
+  .groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+  .refs { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; font-size: 16px; line-height: 1.5; }
+  .refs .t { display: block; font-weight: 600; color: var(--ink); }
+  .refs .m { color: var(--muted); }
+  .refs em { color: var(--ink); }
+  .refs .tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .refs .tools a, .refs .tools button {
+    font: 600 13px/1 var(--body); letter-spacing: 0.02em; color: var(--accent); cursor: pointer;
+    background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px; text-decoration: none;
+  }
+  .refs .tools a:hover, .refs .tools button:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .refs .tools .done { border-color: var(--accent); background: var(--accent-soft); }
+  .cite-box { display: block; width: 100%; margin-top: 8px; min-height: 96px; font: 13px/1.45 ui-monospace, Menlo, Consolas, monospace; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 8px; resize: vertical; }
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 10; background: var(--ink); color: var(--bg); font: 600 14px/1 var(--body); padding: 12px 16px; border-radius: 6px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); border: 1px solid currentColor; border-radius: 3px; padding: 2px 6px; margin-right: 6px; vertical-align: 1px; }
+
+  .wp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 40px; list-style: none; padding: 0; margin: 0; }
+  .wp li { border-top: 1px solid var(--rule); padding-top: 14px; font-size: 16px; line-height: 1.5; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .card { border: 1px solid var(--rule); border-radius: 6px; padding: 22px; display: grid; gap: 6px; align-content: start; }
+  .card .code { font-weight: 700; font-size: 14px; letter-spacing: 0.06em; color: var(--accent); }
+  .card h4 { font: 700 19px/1.3 var(--display); margin: 0; }
+  .card p { margin: 0; font-size: 16px; color: var(--muted); }
+
+  .contact-band { margin-top: 72px; background: var(--surface); border-top: 1px solid var(--rule); }
+  .contact-band .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding-top: 40px; padding-bottom: 40px; }
+  .contact-band dt { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .contact-band dd { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+  .fine { font-size: 14px; color: var(--muted); padding-top: 20px; padding-bottom: 32px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .groups, .cards { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .home { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .contact-band .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 17px; }
+    .wrap { padding-left: 18px; padding-right: 18px; }
+    .wordmark { display: none; }
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-top: 36px; padding-bottom: 44px; }
+    .portrait { width: 104px; font-size: 32px; }
+    .hero .role { font-size: 18px; }
+    .wp { grid-template-columns: minmax(0, 1fr); }
+    .contact-band .wrap { grid-template-columns: minmax(0, 1fr); }
+    section { padding-top: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Peng (Peter) Liu</a>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#publications">Publications</a>
+      <a href="#working">Working papers</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <!-- EDIT: swap this block for <img class="portrait" src="photo.jpg" alt="Peng (Peter) Liu"> -->
+    <div class="portrait" role="img" aria-label="Photo placeholder">PL</div>
+    <div>
+      <h1>Peng (Peter) Liu</h1>
+      <p class="role">Professor of Real Estate and Finance</p>
+      <p class="unit">Singapore Tourism Board Distinguished Professor in Asian Hospitality Management<br>Nolan School of Hotel Administration · Cornell SC Johnson College of Business</p>
+      <div class="actions">
+        <a class="btn primary" href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">Curriculum vitae</a>
+        <a class="btn" href="mailto:pl333@cornell.edu">pl333@cornell.edu</a>
+        <a class="btn" href="https://business.cornell.edu/profiles/pl333/">Cornell profile</a>
+        <!-- EDIT: <a class="btn" href="https://scholar.google.com/citations?user=XXXX">Google Scholar</a> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section id="about">
+    <div class="wrap home">
+      <div class="bio">
+        <h2>About</h2>
+        <p>Peng (Peter) Liu is Professor of Real Estate and Finance at Cornell’s Nolan School of Hotel Administration and an inaugural faculty member of the Rubacha Department of Real Estate. His research examines how financial markets interact with the real economy, with a focus on the valuation and financing of real assets such as commercial real estate, hotels, and commodities.</p>
+        <p>He directs the Cornell–Peking University MMH/MBA dual degree, serves as Faculty Research Director of the Cornell SC Johnson Center for Real Estate and Finance, and edits the <em>Journal of Real Estate Portfolio Management</em>. Before joining Cornell in 2007 he was a research fellow at UC Berkeley’s Fisher Center for Real Estate and Urban Economics, and he has worked at Goldman Sachs Asset Management and Deloitte Consulting. He holds a Ph.D. from UC Berkeley Haas, an M.A. from Peking University, and a B.S. from Tsinghua University.</p>
+        <ul class="interests" aria-label="Research interests">
+          <li>Real estate finance</li>
+          <li>REITs</li>
+          <li>Private equity real estate</li>
+          <li>Hotel asset markets</li>
+          <li>Brand affiliation</li>
+          <li>CMBS and securitization</li>
+          <li>Commodities</li>
+          <li>Applied econometrics</li>
+        </ul>
+      </div>
+
+      <aside class="news" aria-labelledby="news-h">
+        <h3 id="news-h">News</h3>
+        <ol>
+          <li><time>Spr 2026</time><span>Teaching HADM 6200, Principles of Real Estate.</span></li>
+          <li><time>Jul 2025</time><span>Named Faculty Research Director, Center for Real Estate and Finance.</span></li>
+          <li><time>Jul 2025</time><span>Appointed Deputy Area Chair, Applied Economics and Policy.</span></li>
+          <li><time>2025</time><span>Second edition of <em>Hospitality Financial Management and Contextualized Decision Making</em> published.</span></li>
+          <li><time>2025</time><span>“Founder CEOs and REIT capital structure” forthcoming in the <em>Journal of Real Estate Research</em>.</span></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="wrap">
+      <h2>Selected publications</h2>
+      <p class="kicker">Grouped by theme. Use <strong>Cite</strong> or <strong>BibTeX</strong> to copy a reference. The <a href="https://apps.business.cornell.edu/faculty-research/faculty/vita/pl333">CV</a> has the complete list.</p>
+      <div class="groups">
+        <div>
+          <h3>Hospitality asset markets</h3>
+          <ul class="refs">
+            <li data-authors="Singh, A.; O’Neill, J. W.; Liu, P." data-year="2025" data-title="The influence of hotel characteristics on debt servicing and default in the U.S. lodging sector" data-journal="Cornell Hospitality Quarterly" data-volume="66" data-issue="2" data-pages="137–155" data-doi="10.1177/19389655241267241">
+              <span class="t">The influence of hotel characteristics on debt servicing and default in the U.S. lodging sector</span>
+              <span class="m">With A. Singh and J. W. O’Neill. <em>Cornell Hospitality Quarterly</em>, 2025.</span>
+              <span class="tools"><a href="https://doi.org/10.1177/19389655241267241">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Liu, P.; Freybote, J.; Das, P." data-year="2023" data-title="Brand affiliation and the hotel asset market" data-journal="International Journal of Hospitality Management" data-volume="109" data-issue="" data-pages="103428" data-doi="10.1016/j.ijhm.2023.103428">
+              <span class="t">Brand affiliation and the hotel asset market</span>
+              <span class="m">With J. Freybote and P. Das. <em>International Journal of Hospitality Management</em>, 2023.</span>
+              <span class="tools"><a href="https://doi.org/10.1016/j.ijhm.2023.103428">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="O’Neill, J.; Zhao, J.; Liu, P.; Caligiuri, M." data-year="2023" data-title="Benchmarking hotel investment risk: Differences based on types of hotels" data-journal="Cornell Hospitality Quarterly" data-volume="64" data-issue="4" data-pages="485–502" data-doi="10.1177/19389655231164061">
+              <span class="t">Benchmarking hotel investment risk: Differences based on types of hotels</span>
+              <span class="m">With J. O’Neill, J. Zhao, and M. Caligiuri. <em>Cornell Hospitality Quarterly</em>, 2023.</span>
+              <span class="tools"><a href="https://doi.org/10.1177/19389655231164061">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Wu, L.; Liu, P.; Le, D." data-year="2023" data-title="The role of public space in constructing experience capital: A longitudinal analysis in the hotel context" data-journal="Tourism Management" data-volume="97" data-issue="" data-pages="104735" data-doi="10.1016/j.tourman.2023.104735">
+              <span class="t">The role of public space in constructing experience capital</span>
+              <span class="m">With L. Wu and D. Le. <em>Tourism Management</em>, 2023.</span>
+              <span class="tools"><a href="https://doi.org/10.1016/j.tourman.2023.104735">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>REITs and real estate capital</h3>
+          <ul class="refs">
+            <li data-authors="Devos, E.; Feng, Z.; Liu, P.; McGonigle, M." data-year="forthcoming" data-title="Founder CEOs and REIT capital structure: A study of risk aversion and debt choice" data-journal="Journal of Real Estate Research" data-volume="" data-issue="" data-pages="" data-doi="10.1080/08965803.2025.2526269">
+              <span class="t">Founder CEOs and REIT capital structure: A study of risk aversion and debt choice</span>
+              <span class="m">With E. Devos, Z. Feng, and M. McGonigle. <em>Journal of Real Estate Research</em>, forthcoming.</span>
+              <span class="tools"><a href="https://doi.org/10.1080/08965803.2025.2526269">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Yu, B.; Liu, P.; Das, P." data-year="forthcoming" data-title="Investor networks and fund performance in private equity real estate funds" data-journal="Journal of Real Estate Finance and Economics" data-volume="" data-issue="" data-pages="" data-doi="10.1007/s11146-024-10007-2">
+              <span class="t">Investor networks and fund performance in private equity real estate funds</span>
+              <span class="m">With B. Yu and P. Das. <em>Journal of Real Estate Finance and Economics</em>, forthcoming.</span>
+              <span class="tools"><a href="https://doi.org/10.1007/s11146-024-10007-2">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Leung, D.; Liu, P.; Zhou, T." data-year="2024" data-title="Competition, agglomeration, and tenant composition in shopping malls" data-journal="Real Estate Economics" data-volume="52" data-issue="" data-pages="552–576" data-doi="10.1111/1540-6229.12442">
+              <span class="t">Competition, agglomeration, and tenant composition in shopping malls</span>
+              <span class="m">With D. Leung and T. Zhou. <em>Real Estate Economics</em>, 2024.</span>
+              <span class="tools"><a href="https://doi.org/10.1111/1540-6229.12442">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Feng, Z.; Liu, P." data-year="2023" data-title="Introducing “focused firms”: Implications from REIT prime operating revenue" data-journal="Journal of Real Estate Finance and Economics" data-volume="67" data-issue="3" data-pages="545–578" data-doi="10.1007/s11146-021-09850-4">
+              <span class="t">Introducing “focused firms”: Implications from REIT prime operating revenue</span>
+              <span class="m">With Z. Feng. <em>Journal of Real Estate Finance and Economics</em>, 2023.</span>
+              <span class="tools"><a href="https://doi.org/10.1007/s11146-021-09850-4">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Financial markets and real assets</h3>
+          <ul class="refs">
+            <li data-authors="Chen, P.; Kozhanov, I.; Liu, P.; Wu, C." data-year="2021" data-title="Commercial mortgage-backed security pricing with real estate liquidity risk" data-journal="Real Estate Economics" data-volume="49" data-issue="S2" data-pages="490–525" data-doi="10.1111/1540-6229.12297">
+              <span class="t">Commercial mortgage-backed security pricing with real estate liquidity risk</span>
+              <span class="m">With P. Chen, I. Kozhanov, and C. Wu. <em>Real Estate Economics</em>, 2021.</span>
+              <span class="tools"><a href="https://doi.org/10.1111/1540-6229.12297">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Liu, P.; Xie, J." data-year="2021" data-title="Optimal contract design in residential brokerage" data-journal="Real Estate Economics" data-volume="49" data-issue="2" data-pages="493–530" data-doi="10.1111/1540-6229.12283">
+              <span class="t">Optimal contract design in residential brokerage</span>
+              <span class="m">With J. Xie. <em>Real Estate Economics</em>, 2021.</span>
+              <span class="tools"><a href="https://doi.org/10.1111/1540-6229.12283">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Casassus, J.; Liu, P.; Tang, K." data-year="2013" data-title="Economic linkages, relative scarcity, and commodity futures returns" data-journal="Review of Financial Studies" data-volume="26" data-issue="5" data-pages="1324–1362" data-doi="10.1093/rfs/hhs127">
+              <span class="t">Economic linkages, relative scarcity, and commodity futures returns</span>
+              <span class="m">With J. Casassus and K. Tang. <em>Review of Financial Studies</em>, 2013.</span>
+              <span class="tools"><a href="https://doi.org/10.1093/rfs/hhs127">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+            <li data-authors="Liu, P.; Zhang, J." data-year="2012" data-title="Rational herding in microloan markets" data-journal="Management Science" data-volume="58" data-issue="5" data-pages="892–912" data-doi="10.1287/mnsc.1110.1459">
+              <span class="t">Rational herding in microloan markets</span>
+              <span class="m">With J. Zhang. <em>Management Science</em>, 2012.</span>
+              <span class="tools"><a href="https://doi.org/10.1287/mnsc.1110.1459">DOI</a><button type="button" class="cite" data-format="text">Cite</button><button type="button" class="cite" data-format="bibtex">BibTeX</button></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="working">
+    <div class="wrap">
+      <h2>Working papers</h2>
+      <p class="kicker">Drafts available on request.</p>
+      <ul class="wp">
+        <li><span class="tag">R&amp;R</span><strong>The value of a brand: The case of hotels.</strong> With J. Sheinberg. <em>Cornell Hospitality Quarterly</em>.</li>
+        <li><span class="tag">R&amp;R</span><strong>Real earnings management in REITs.</strong> With B. Edelstein and D. Tsang. <em>Real Estate Economics</em>.</li>
+        <li><span class="tag">R&amp;R</span><strong>Appraisal bias and default in commercial real estate.</strong> With A. Singh and J. W. O’Neill. <em>International Journal of Hospitality Management</em>.</li>
+        <li><span class="tag">Under review</span><strong>Hotel establishment performance and the brand network externality.</strong> With Z. Feng.</li>
+        <li><span class="tag">Under review</span><strong>Professional property management and the performance of vacation rentals.</strong> With M. Medeiros and N. Hua.</li>
+        <li><span class="tag">Under review</span><strong>Performance dynamics and valuation of short-term rentals in tourism markets.</strong> With M. Medeiros and N. Hua.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="teaching">
+    <div class="wrap">
+      <h2>Teaching and programs</h2>
+      <p class="kicker">Courses, degree programs, and student organizations.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="code">HADM 6200</span>
+          <h4>Principles of Real Estate</h4>
+          <p>Graduate introduction to real estate finance and investment: valuation under uncertainty, mortgage financing, and investment decisions.</p>
+        </div>
+        <div class="card">
+          <span class="code">MMH / MBA</span>
+          <h4>Cornell–Peking University dual degree</h4>
+          <p>Academic Director of the joint program with Peking University. <!-- EDIT: add a sentence on the program and a link --></p>
+        </div>
+        <div class="card">
+          <span class="code">Students</span>
+          <h4>Real estate at the Hotel School</h4>
+          <p>Faculty Coordinator for the Minor in Real Estate and faculty advisor to the CREC and CREDIT student clubs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="contact-band" id="contact">
+  <dl class="wrap">
+    <div><dt>Email</dt><dd><a href="mailto:pl333@cornell.edu">pl333@cornell.edu</a></dd></div>
+    <div><dt>Phone</dt><dd>607.254.2960</dd></div>
+    <div><dt>Office</dt><dd>448 Statler Hall, Ithaca, NY 14853-6201</dd></div>
+    <div><dt>Elsewhere</dt><dd><a href="https://ecommons.cornell.edu/browse/author?value=Liu,%20Peng">eCommons</a> · <a href="https://business.cornell.edu/profiles/pl333/">Cornell profile</a></dd></div>
+  </dl>
+  <div class="wrap fine">Last updated October 2026</div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+  // Cite / BibTeX buttons: build a reference from the data-* attributes on each
+  // publication <li> and copy it to the clipboard. To add a paper, copy an <li>
+  // and edit its data-* attributes (separate authors with semicolons).
+  (function () {
+    var toast = document.querySelector('.toast'), timer;
+    function say(msg) {
+      toast.textContent = msg; toast.hidden = false;
+      clearTimeout(timer); timer = setTimeout(function () { toast.hidden = true; }, 2200);
+    }
+    function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    function authorList(li) { return li.dataset.authors.split(';').map(function (a) { return a.trim(); }); }
+
+    function apa(li) {
+      var a = authorList(li), d = li.dataset;
+      var who = a.length === 1 ? a[0] : a.slice(0, -1).join(', ') + ', & ' + a[a.length - 1];
+      var when = d.year === 'forthcoming' ? '(forthcoming)' : '(' + d.year + ')';
+      var vol = d.volume ? ', ' + d.volume + (d.issue ? '(' + d.issue + ')' : '') : '';
+      var pages = d.pages ? ', ' + d.pages : '';
+      var doi = d.doi ? ' https://doi.org/' + d.doi : '';
+      var plain = who + ' ' + when + '. ' + d.title + '. ' + d.journal + vol + pages + '.' + doi;
+      var rich = esc(who + ' ' + when + '. ' + d.title + '. ') + '<i>' + esc(d.journal) + (d.volume ? ', ' + esc(d.volume) : '') + '</i>' +
+                 (d.issue ? '(' + esc(d.issue) + ')' : '') + esc(pages + '.' + doi);
+      return { plain: plain, rich: rich };
+    }
+
+    function bibtex(li) {
+      var a = authorList(li), d = li.dataset;
+      var ascii = function (t) { return t.replace(/[\u2018\u2019]/g, "'").replace(/\u201C/g, '``').replace(/\u201D/g, "''").replace(/\u2013/g, '--'); };
+      var last = a[0].split(',')[0].normalize('NFD').replace(/[^A-Za-z]/g, '').toLowerCase();
+      var word = (d.title.toLowerCase().match(/[a-z]+/g) || ['paper']).filter(function (w) { return ['a', 'an', 'the'].indexOf(w) < 0; })[0];
+      var key = last + (d.year === 'forthcoming' ? 'forthcoming' : d.year) + word;
+      var f = [['author', ascii(a.join(' and '))], ['title', '{' + ascii(d.title) + '}'], ['journal', d.journal],
+               ['year', d.year === 'forthcoming' ? 'forthcoming' : d.year], ['volume', d.volume], ['number', d.issue],
+               ['pages', ascii(d.pages)], ['doi', d.doi]].filter(function (x) { return x[1]; });
+      var body = f.map(function (x) { return '  ' + (x[0] + '       ').slice(0, 8) + '= {' + x[1] + '}'; }).join(',\n');
+      return '@article{' + key + ',\n' + body + '\n}';
+    }
+
+    function showBox(li, text) {
+      var box = li.querySelector('.cite-box');
+      if (!box) { box = document.createElement('textarea'); box.className = 'cite-box'; box.readOnly = true; box.setAttribute('aria-label', 'Citation text'); li.appendChild(box); }
+      box.value = text; box.focus(); box.select();
+      say('Selected. Press Ctrl+C (Cmd+C on Mac) to copy.');
+    }
+
+    function flash(btn) {
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      clearTimeout(btn._t); btn.textContent = 'Copied'; btn.classList.add('done');
+      btn._t = setTimeout(function () { btn.textContent = btn.dataset.label; btn.classList.remove('done'); }, 1600);
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('button.cite');
+      if (!btn) return;
+      var li = btn.closest('li');
+      var isBib = btn.dataset.format === 'bibtex';
+      var c = isBib ? null : apa(li);
+      var text = isBib ? bibtex(li) : c.plain;
+      var done = function () { flash(btn); say(isBib ? 'BibTeX copied' : 'Citation copied'); };
+      var fail = function () { showBox(li, text); };
+      if (!navigator.clipboard) { fail(); return; }
+      if (!isBib && window.ClipboardItem && navigator.clipboard.write) {
+        var item = new ClipboardItem({
+          'text/plain': new Blob([text], { type: 'text/plain' }),
+          'text/html': new Blob([c.rich], { type: 'text/html' })
+        });
+        navigator.clipboard.write([item]).then(done, function () {
+          navigator.clipboard.writeText(text).then(done, fail);
+        });
+      } else {
+        navigator.clipboard.writeText(text).then(done, fail);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
